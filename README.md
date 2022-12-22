@@ -3142,42 +3142,545 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
     Hay componentes `Calendar` y `CurrentDate` en el editor de código. Al prensentar `CurrentDate` desde el componente `Calendar`, pasa una propiedad de `date` asignada a la fecha actual desde el objeto `Date` de JavaScript. Luego, accede a este `prop` dentro del componente `CurrentDate`, mostrando su valor dentro de las etiquetas `p`. Tenga en cuenta que los valores `prop` se evalúen como JavaScript, deben estar encerrados dentro de corchetes, por ejemplo `date={Date()}`.
     
     ```js
-        
+    const CurrentDate = (props) => {
+        return (
+            <div>
+                { /* Cambia el código debajo de esta línea */ }
+                <p>The current date is: {props.date} </p>
+                { /* Cambia el código encima de esta línea */ }
+            </div>
+        );
+    };
+
+    class Calendar extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                    <h3>What date is it?</h3>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <CurrentDate date={Date()} />
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };    
     ```
     
-15. 
-16. 
-17. 
-18. 
-19. 
-20. 
-21. 
-22. 
-23. 
-24. 
-25. 
-26. 
+15. Pasa un arreglo como "props"
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/pass-an-array-as-props)
+
+    **Ejercicio**
+    Están los componentes `List` y `ToDo` en el editor de código. Al renderizar cada `List` del componente `ToDo`, pasa una propiedad tasks asignada a un arreglo de tareas pendientes, por ejemplo `["walk dog", "workout"]`. Luego, accede a este arreglo de `tasks` en el componente `List`, mostrando su valor dentro del elemento `p`. Usa `join(", ")` para mostrar el arreglo `props.tasks` en el elemento `p` como una lista separada por comas. La lista de hoy debe tener al menos 2 tareas y la de mañana debe tener al menos 3 tareas.
+
+    ```js
+    const List = (props) => {
+        { /* Cambia el código debajo de esta línea */ }
+        return <p>{props.tasks.join(", ")}</p>;
+        { /* Cambia el código encima de esta línea */ }
+    };
+
+    class ToDo extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                    <h1>To Do Lists</h1>
+                    <h2>Today</h2>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <List tasks={["Walk", "Cook", "Bake"]} />
+                    <h2>Tomorrow</h2>
+                    <List tasks={["Study", "Code", "Eat"]} />
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };        
+    ```
+    **Explicacion**
+    * El método `.join(", ")` se utiliza para tomar cada elemento de la matriz y unirlos en una cadena que se mostrará.
+
+    * Estamos usando la modularidad de React en este ejemplo para mostrar las tareas pasadas por dos componentes diferentes a un componente común que representa el HTML final.
+
+
+16. Usa props predeterminadas
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-default-props)
+
+    **Ejercicio**
+    El editor de código muestra un componente `ShoppingCart`. Define props predeterminadas en este componente que especifican una prop `items` con un valor de `0`.
+
+    ```js
+    const ShoppingCart = (props) => {
+        return (
+            <div>
+            <h1>Shopping Cart Component</h1>
+            </div>
+        )
+    };
+    // Cambia el código debajo de esta línea
+    ShoppingCart.defaultProps = {
+        items: 0
+    };        
+    ```
+
+17. Reemplaza las "props" predeterminadas
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/override-default-props)
+
+    **Ejercicio**
+    El componente `ShoppingCart` ahora renderiza un componente hijo `Items`. Este componente `Items` tiene una prop predeterminada `quantity` establecida al entero `0`. Reemplaza la prop predeterminada pasando un valor de 10 para `quantity`.
+
+    **Nota**: Recuerda que la sintaxis para agregar una prop a un componente se parece a la sintaxis para agregar atributos en un elemento HTML. Sin embargo, dado que el valor de `quantity` es un entero, no irá entre comillas pero debe estar envuelto entre llaves. Por ejemplo, `{100}`. Esta sintaxis le dice a JSX que interprete el valor dentro de las llaves directamente como JavaScript.
+
+    ```js
+    const Items = (props) => {
+        return <h1>Current Quantity of Items in Cart: {props.quantity}</h1>
+    }
+
+    Items.defaultProps = {
+        quantity: 0
+    }
+
+    class ShoppingCart extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            { /* Cambia el código debajo de esta línea */ }
+            return <Items quantity={10}/>
+            { /* Cambia el código encima de esta línea */ }
+        }
+    };        
+    ```
+
+18. Usa PropTypes para definir las props que esperas
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-proptypes-to-define-the-props-you-expect)
+    
+    **Ejercicio**
+    Define `propTypes` para el componente `Items` de tal manera que `quantity` sea una prop obligatoria y verificar que sea de tipo `number`.
+
+    ```js
+    const Items = (props) => {
+        return <h1>Current Quantity of Items in Cart: {props.quantity}</h1>
+    };
+
+    // Cambia el código debajo de esta línea
+    Items.propTypes = { 
+        quantity: PropTypes.number.isRequired 
+    }
+    // Cambia el código encima de esta línea
+
+    Items.defaultProps = {
+        quantity: 0
+    };
+
+    class ShoppingCart extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return <Items />
+        }
+    };        
+    ```
+
+19. Accede a propiedades "props" usando this.props
+
+    Leccion original [FCC]()
+    **Ejercicio**
+    Renderiza una instancia del componente `Welcome` en el componente padre `App`. Aquí, dale a `Welcome` un prop de `name` y asígnale un valor de una cadena. Dentro del hijo, `Welcome`, accede el prop `name` dentro de las etiquetas `strong`.
+
+    ```js
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+
+        }
+        render() {
+            return (
+                <div>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <Welcome name="Jessica"/>
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };
+
+    class Welcome extends React.Component {
+        constructor(props) {
+            super(props);
+
+        }
+        render() {
+            return (
+                <div>
+                { /* Cambia el código debajo de esta línea */ }
+                <p>Hello, <strong>{this.props.name}</strong>!</p>
+                { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };        
+    ```
+
+20. Revisa el uso de "props" con componentes funcionales sin estado
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/review-using-props-with-stateless-functional-components)
+    
+    **Ejercicio**
+    El editor de código tiene un componente `CampSite` que renderiza un componente `Camper` como un componente hijo. Define el componente `Camper` y asigna los props predeterminados de `{ name: 'CamperBot' }`. Dentro del componente `Camper`, renderiza el código que quieras, pero asegúrate de tener un elemento `p` que incluya sólo el valor `name` que se pasa como un prop. Por último, define `propTypes` en el componente `Camper` para requerir que `name` sea proporcionado como un prop y verifique que sea de tipo `string`.
+
+    ```js
+    class CampSite extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                    <Camper/>
+                </div>
+            );
+        }
+    };
+    // Cambia el código debajo de esta línea
+    const Camper = props => <p>{props.name}</p>;
+
+    Camper.defaultProps = {
+        name: "CamperBot"
+    };
+
+    Camper.propTypes = {
+        name: PropTypes.string.isRequired
+    };        
+    ```
+
+21. Crea un componente de estado
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/create-a-stateful-component)
+
+    **Ejercicio**
+    Hay un componente en el editor de código que está intentando renderizar una propiedad `firstName` desde su `state`. Sin embargo, no hay ningún `state` definido. Inicia el componente con `state` en el `constructor` y asigna tu nombre a la propiedad `firstName`.
+
+    ```js
+    class StatefulComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            // Cambia solo el código debajo de esta línea
+            this.state = {
+                firstName : "firstName"
+            }
+            // Cambia solo el código encima de esta línea
+        }
+        render() {
+            return (
+            <div>
+                <h1>{this.state.firstName}</h1>
+            </div>
+            );
+        }
+    };        
+    ```
+
+22. Renderiza el estado en la interfaz de usuario
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/render-state-in-the-user-interface)
+    
+    **Ejercicio**
+    En el editor de código, `MyComponent` ya tiene estado. Define una etiqueta `h1` en el método de renderizado del componente que renderiza el valor del `name` desde el estado del componente.
+
+    **Note**: El `h1` solo debe renderizar el valor de `state` y nada más. En JSX, cualquier código que escribas con llaves `{ }` será tratado como JavaScript. Así que para acceder al valor desde el `state` solo hay que encerrar la referencia entre llaves.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: 'freeCodeCamp'
+            }
+        }
+        render() {
+            return (
+            <div>
+                { /* Cambia el código debajo de esta línea */ }
+                <h1>
+                {this.state.name}
+                </h1>
+                { /* Cambia el código encima de esta línea */ }
+            </div>
+            );
+        }
+    };        
+    ```
+
+23. Otra manera de renderizar el estado en la interfaz de usuario
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/render-state-in-the-user-interface-another-way)
+
+    **Ejercicio**
+    En el método de renderización de `MyComponent`, define una `const` llamada `name` y asígnalo igual al valor del nombre en el `state` del componente. Debido a que puedes escribir JavaScript directamente en esta parte del código, no tienes que incluir esta referencia entre llaves.
+
+    A continuación, en la sentencia return, renderiza este valor en una etiqueta `h1` usando la variable `name`. Recuerda, necesitas usar la sintaxis JSX (llaves para JavaScript) en la sentencia return.
+
+    ```js        
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: 'freeCodeCamp'
+            }
+        }
+        render() {
+            // Cambia el código debajo de esta línea
+            const name = this.state.name;
+            // Cambia el código encima de esta línea
+            return (
+                <div>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <h1>{name}</h1>
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };
+    ```
+
+24. Define el estado con this.setState
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/set-state-with-this-setstate)
+    
+    **Ejercicio**
+    Hay un elemento `button` en el editor de código que tiene un controlador `onClick()`. Este controlador es activado cuando el `button` recibe un evento clic en el navegador, y ejecuta el método `handleClick` definido en `MyComponent`. Dentro del método `handleClick`, actualiza el componente `state` usando `this.setState()`. Establece la propiedad `name` en el `state` para igualar la cadena `React Rocks!`.
+
+    Haz clic en el botón y observa la actualización de estado renderizada. No te preocupes si no entiendes completamente cómo funciona el código del controlador de clics hasta ahora. Será cubierto en los siguientes desafíos.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: 'Initial State'
+            };
+            this.handleClick = this.handleClick.bind(this);
+        }
+        handleClick() {
+            // Cambia el código debajo de esta línea
+            this.setState({
+                name: 'React Rocks!'
+            });
+            // Cambia el código encima de esta línea
+        }
+        render() {
+            return (
+                <div>
+                    <button onClick={this.handleClick}>Click Me</button>
+                    <h1>{this.state.name}</h1>
+                </div>
+            );
+        }
+    };        
+    ```
+
+25. Vincula 'this' a un método de clase
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/bind-this-to-a-class-method)
+    
+    **Ejercicio**
+    El editor de código tiene un componente con un `state` que mantiene un seguimiento del texto. También tiene un método que le permite establecer el texto a `You clicked!`. Sin embargo, el método no funciona porque está utilizando la palabra clave `this` que no está definida. Arréglalo explícitamente ligando `this` al método `handleClick()` en el constructor del componente.
+
+    A continuación, añade un click handler al elemento `button` en el método render. Debes activar el método `handleClick()` cuando el botón recibe un evento de clic. Recuerda que el método que pasas al `onClick` handler necesita llaves porque debe ser interpretado directamente como JavaScript.
+
+    Una vez que completes los pasos anteriores debes poder hacer clic en el botón y ver `You clicked!`.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                text: "Hello"
+            };
+            // Cambia el código debajo de esta línea
+            this.handleClick = this.handleClick.bind(this)
+            // Cambia el código encima de esta línea
+        }
+        handleClick() {
+            this.setState({
+                text: "You clicked!"
+            });
+        }
+        render() {
+            return (
+                <div>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <button onClick = {this.handleClick}>
+                        Click Me
+                    </button>
+                    { /* Cambia el código encima de esta línea */ }
+                    <h1>{this.state.text}</h1>
+                </div>
+            );
+        }
+    };        
+    ```
+
+26. Usa el estado para alternar un elemento
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-state-to-toggle-an-element)
+
+    **Ejercicio**
+    `MyComponent` tiene una propiedad `visibility` que se inicializa con el valor `false`. El método de renderización devuelve un resultado si el valor de `visibility` es verdadero, y un resultado diferente si es falso.
+
+    Actualmente, no hay forma de actualizar la propiedad `visibility` en el `state` del componente. El valor debe cambiar entre verdadero y falso. Hay un manejador para el evento clic en el botón que activa un método de clase llamado `toggleVisibility()`. Pasa una función a `setState` para definir este método, de tal forma que el `state` de `visibility` cambie al valor opuesto cuando se llame el método. Si `visibility` es `false`, el método lo cambia a `true` y viceversa.
+
+    Finalmente, haz clic en el botón para ver la renderizado condicional del componente basado en su `state`.
+
+    **Pista**: ¡No olvides enlazar la palabra clave `this` al método en el constructor!
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                visibility: false
+            };
+            // Cambia el código debajo de esta línea
+
+            // Cambia el código encima de esta línea
+        }
+        // Cambia el código debajo de esta línea
+
+        // Cambia el código encima de esta línea
+        render() {
+            if (this.state.visibility) {
+                return (
+                    <div>
+                    <button onClick={this.toggleVisibility}>Click Me</button>
+                    <h1>Now you see me!</h1>
+                    </div>
+                );
+            } else {
+                return (
+                    <div>
+                    <button onClick={this.toggleVisibility}>Click Me</button>
+                    </div>
+                );
+            }
+        }
+    }        
+    ```
 27. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 28. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 29. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 30. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 31. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 32. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 33. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 34. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 35. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 36. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 37. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 38. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 39. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 40. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 41. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 42. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 43. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 44. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 45. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 46. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 47. 
+    Leccion original [FCC]()
+    **Ejercicio**
+    ```js        
+    ```
 
 # Redux
 # React y Redux
