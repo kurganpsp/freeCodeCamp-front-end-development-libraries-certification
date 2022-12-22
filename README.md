@@ -22,6 +22,7 @@ Después, construirás un carrito de compras y otras aplicaciones para aprender 
     - Construye un reloj 25 + 5
 
 # Bootstrap
+
 En este curso, aprenderás cómo crear sitios web responsivos con Bootstrap, y utilizarás sus clases incluidas para estilizar botones, imágenes, formularios, navegación y otros elementos.
 
 1. Utiliza diseño responsivo con contenedores fluidos de Bootstrap
@@ -1758,6 +1759,7 @@ En este curso, aprenderás cómo crear sitios web responsivos con Bootstrap, y u
 
 
 # jQuery
+
 En este curso, aprenderás a usar jQuery para seleccionar, eliminar, copiar y modificar diferentes elementos de la página.
 
 1. Aprende como funciona la etiqueta script y la función "document ready"
@@ -2562,6 +2564,7 @@ En este curso, aprenderás a usar jQuery para seleccionar, eliminar, copiar y mo
 
 
 # SASS
+
 En este curso de Sass, aprenderás cómo almacenar datos en variables, anidar CSS, crear estilos reutilizables con mixins, añadir lógica y bucles a tus estilos, y más.
 
 1. Almacena datos con variables Sass
@@ -2806,6 +2809,7 @@ En este curso de Sass, aprenderás cómo almacenar datos en variables, anidar CS
     ```
 
 # React js
+
 En este curso, aprenderás cómo crear diferentes componentes de *React*, administrar las propiedades de estado de los datos, usar diferentes métodos de ciclo de vida como `componentDidMount` y mucho más.
 
 1. Crea un elemento JSX simple
@@ -3590,82 +3594,688 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
     Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/write-a-simple-counter)
     
     **Ejercicio**
-    El componente `Counter` mantiene un seguimiento de un valor `count` en el `state`. Hay dos botones que llaman a métodos `increment()` y `decrement()`. Escribe estos métodos para que el valor del contador sea incrementado o disminuyendo por 1 cuando se haga clic en el botón apropiado. También, crea un método `reset()` para que cuando se haga clic en el botón reset, el contador se establezca a 0.
+    El componente `Counter` mantiene un seguimiento de un valor `count` en el `state`. Hay dos botones que llaman a métodos `increment()` y `decrement()`. Escribe estos métodos para que el valor del contador sea incrementado o disminuyendo por 1 cuando se haga clic en el botón apropiado. También, crea un método `reset()` para que cuando se haga clic en el botón reset, el contador se establezca a `0`.
 
     **Nota**: Asegúrate de no modificar el `className` de los botones. Además, recuerda agregar en el constructor los enlaces necesarios para los métodos recién creados.
     
-    ```js        
+    ```js
+    class Counter extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                count: 0
+            };
+            // Cambia el código debajo de esta línea
+            this.increment = this.increment.bind(this);
+            this.decrement = this.decrement.bind(this);
+            this.reset = this.reset.bind(this);
+            // Cambia el código encima de esta línea
+        }
+        // Cambia el código debajo de esta línea
+        reset() {
+            this.setState({
+                count: 0
+            });
+        }
+        increment() {
+            this.setState(state => ({
+                count: state.count + 1
+            }));
+        }
+        decrement() {
+            this.setState(state => ({
+                count: state.count - 1
+            }));
+        }    
+        // Cambia el código encima de esta línea    
+        render() {
+            return (
+                <div>
+                    <button className='inc' onClick={this.increment}>Increment!</button>
+                    <button className='dec' onClick={this.decrement}>Decrement!</button>
+                    <button className='reset' onClick={this.reset}>Reset</button>
+                    <h1>Current Count: {this.state.count}</h1>
+                </div>
+            );
+        }
+    };        
     ```
-28. 
-    Leccion original [FCC]()
+
+28. Crea una entrada controlada
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/create-a-controlled-input)
+
     **Ejercicio**
-    ```js        
+    El editor de código tiene el esqueleto de un componente llamado `ControlledInput` para crear un elemento `input` controlado. El `state` del componente ya está inicializado con una propiedad `input` que contiene una cadena vacía. Este valor representa el texto que un usuario escribe en el campo `input`.
+
+    Primero, crea un método llamado `handleChange()` que tiene un parámetro llamado `event`. Cuando el método es llamado, este recibe un objeto `event` que contiene una cadena de texto del elemento `input`. Puedes acceder a esta cadena con `event.target.value` dentro del método. Actualiza la propiedad `input` del `state` del componente con esta nueva cadena.
+
+    En el método `render`, crea el elemento `input` encima de la etiqueta `h4`. Añade un atributo `value` que es igual a la propiedad `input` del `state` del componente. Luego añade un manejador de eventos `onChange()` establecido al método `handleChange()`.
+
+    Cuando escribes en el cuadro de entrada, ese texto es procesado por el método `handleChange()`, establecido como la propiedad `input` en el `state` local, y renderizado como el valor en el cuadro `input` de la página. El `state` del componente es la única fuente de verdad con respecto a los datos de entrada.
+
+    Por último, pero no menos importante, no olvides añadir los enlaces necesarios en el constructor.
+
+    ```js
+    class ControlledInput extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: ''
+            };
+            // Cambia el código debajo de esta línea
+            this.handleChange = this.handleChange.bind(this);
+            // Cambia el código encima de esta línea
+        }
+        // Cambia el código debajo de esta línea
+        handleChange (event) {
+            this.setState({
+                input: event.target.value
+            })
+        }
+        // Cambia el código encima de esta línea
+        render() {
+            return (
+                <div>
+                    { /* Cambia el código debajo de esta línea */}
+                    <input value={this.state.input} onChange={this.handleChange} />
+                    { /* Cambia el código encima de esta línea */}
+                    <h4>Controlled Input:</h4>
+                    <p>{this.state.input}</p>
+                </div>
+            );
+        }
+    };        
     ```
-29. 
-    Leccion original [FCC]()
+
+29. Crea un formulario controlado
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/create-a-controlled-form)
+
     **Ejercicio**
-    ```js        
+    El componente `MyForm` está configurado con un `form` vacío, con un manejador de envío. El manejador de envío será llamado cuando se envíe el formulario.
+
+    Hemos añadido un botón que envía el formulario. Puedes ver que tiene el `type` establecido en `submit` indicando que es el botón que controla el formulario. Añade el elemento `input` en el formulario `form` y establece sus atributos `value` y `onChange()` como el último desafío. A continuación, debes completar el método `handleSubmit` para que establezca la propiedad de estado del componente `submit` al valor de entrada actual en el `state` local.
+
+    **Nota**: También debes llamar a `event.preventDefault()` en el controlador de envío, para evitar el comportamiento predeterminado de envío de formulario que actualizará la página web. Para la comodidad de los campistas, el comportamiento predeterminado se ha desactivado aquí para evitar que las actualizaciones restablezcan el código de desafío.
+
+    Por último, crea una etiqueta `h1` después del `form` que renderiza el valor de `submit` del `state` del componente. A continuación, puedes escribir en el formulario y hacer clic en el botón (o pulsar intro), y deberías ver tu entrada renderizada en la página.
+
+    ```js
+    class MyForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: '',
+                submit: ''
+            };
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+        handleChange(event) {
+            this.setState({
+                input: event.target.value
+            });
+        }
+        handleSubmit(event) {
+            // Cambia el código debajo de esta línea
+            event.preventDefault()
+            this.setState({
+                submit: this.state.input
+            });
+            // Cambia el código encima de esta línea
+        }
+        render() {
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                    {/* Cambia el código debajo de esta línea */}
+                    <input
+                        value={this.state.input}
+                        onChange={this.handleChange} />
+                    {/* Cambia el código encima de esta línea */}
+                    <button type='submit'>Submit!</button>
+                    </form>
+                    {/* Cambia el código debajo de esta línea */}
+                    <h1>{this.state.submit}</h1>
+                    {/* Cambia el código encima de esta línea */}
+                </div>
+            );
+        }
+    }        
     ```
-30. 
-    Leccion original [FCC]()
+
+30. Pasa el estado como "props" a componentes hijos
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/pass-state-as-props-to-child-components)
+    
     **Ejercicio**
-    ```js        
+    El componente `MyApp` es de estado y renderiza un componente `Navbar` como un componente hijo. Pasa la propiedad `name` en su `state` al componente hijo, luego muestra el `name` en la etiqueta `h1` que es parte del método de renderizado de `Navbar`. `name` debe aparecer luego del texto `Hello, my name is:`.
+
+    ```js
+    class MyApp extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                name: 'CamperBot'
+            }
+        }
+        render() {
+            return (
+                <div>
+                    {/* Cambia el código debajo de esta línea */}
+                    <Navbar name={this.state.name}/>
+                    {/* Cambia el código encima de esta línea */}
+                </div>
+            );
+        }
+    };
+
+    class Navbar extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                {/* Cambia el código debajo de esta línea */}
+                <h1>Hello, my name is: {this.props.name}</h1>
+                {/* Cambia el código encima de esta línea */}
+                </div>
+            );
+        }
+    };        
     ```
-31. 
-    Leccion original [FCC]()
+
+31. Pasa una función callback como "props"
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/pass-a-callback-as-props)
+    
     **Ejercicio**
-    ```js        
+    Hay tres componentes descritos en el editor de código. El componente `MyApp` es el padre que renderizará los componentes hijos `GetInput` y `RenderInput`. Añade el componente `GetInput` al método de renderizar en `MyApp`, luego pásale un "prop" llamado `input` asignado a `inputValue` desde el estado `state` de `MyApp`. También crea un "prop" llamado `handleChange` y pasa el controlador de entrada `handleChange` a este.
+
+    A continuación, añade `RenderInput` al método de renderizar en `MyApp`, luego crea un "prop" llamado `input` y pasa el `inputValue` desde el estado `state` a este. Una vez que hayas terminado podrás escribir en el campo `input` en el componente `GetInput`, que luego llama al método manejador en su padre a través de "props". Esto actualiza la entrada en el `state` del padre, que se pasa como "props" a ambos hijos. Observa cómo fluyen los datos entre los componentes y cómo la única fuente de verdad sigue siendo el `state` del componente padre. Es cierto que este ejemplo es un poco inventado, pero debe servir para ilustrar cómo los datos y las funciones callback pueden ser pasados entre componentes React.
+
+    ```js     
+    class MyApp extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                inputValue: ''
+            }
+            this.handleChange = this.handleChange.bind(this);
+        }
+        handleChange(event) {
+            this.setState({
+                inputValue: event.target.value
+            });
+        }
+        render() {
+            return (
+                <div>
+                    { /* Cambia el código debajo de esta línea */ }
+                    <GetInput
+                        input={this.state.inputValue}
+                        handleChange={this.handleChange}/>
+                    <RenderInput
+                        input={this.state.inputValue}/>
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };
+
+    class GetInput extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                    <h3>Get Input:</h3>
+                    <input value={this.props.input}
+                           onChange={this.props.handleChange}/>
+                </div>
+            );
+        }
+    };
+
+    class RenderInput extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return (
+                <div>
+                    <h3>Input Render:</h3>
+                    <p>{this.props.input}</p>
+                </div>
+            );
+        }
+    };   
     ```
-32. 
-    Leccion original [FCC]()
+
+32. Usa el método de ciclo de vida componentWillMount
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-the-lifecycle-method-componentwillmount)
+
     **Ejercicio**
-    ```js        
+    El método `componentWillMount()` es invocado antes del método `render()` cuando un componente está siendo montado en el DOM. Imprime algo en la consola dentro de `componentWillMount()` - puede que quieras tener la consola del navegador abierta para ver el resultado.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        componentWillMount() {
+            // Cambia el código debajo de esta línea
+            console.log(`asdfadf`);
+            // Cambia el código encima de esta línea
+        }
+        render() {
+            return <div />
+        }
+    };        
     ```
-33. 
-    Leccion original [FCC]()
+
+33. Usa el método de ciclo de vida componentDidMount
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-the-lifecycle-method-componentdidmount)
+    
     **Ejercicio**
-    ```js        
+    Hay una llamada simulada al API en `componentDidMount()`. Esta llamada modifica el estado después de 2.5 segundos para simular una llamada a un servidor para obtener datos. Este ejemplo consulta el total de usuarios activos actual para un sitio. En el método render, se renderiza el valor de `activeUsers` en el `h1` después del texto `Active Users:`. Mira lo que sucede en la vista previa, y siéntete libre de cambiar el tiempo de espera para ver los diferentes efectos.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                activeUsers: null
+            };
+        }
+        componentDidMount() {
+            setTimeout(() => {
+                this.setState({
+                    activeUsers: 1273
+                });
+            }, 2500);
+        }
+        render() {
+            return (
+                <div>
+                    {/* Cambia el código debajo de esta línea */}
+                    <h1>Active Users: { this.state.activeUsers } </h1>
+                    {/* Cambia el código encima de esta línea */}
+                </div>
+            );
+        }
+    }        
     ```
-34. 
-    Leccion original [FCC]()
+
+34. Agrega detectores de eventos (Event Listeners)
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/add-event-listeners)
+    
     **Ejercicio**
-    ```js        
+    Agrega un detector de eventos en el método `componentDidMount()` para los eventos `keydown` y haz que estos eventos ejecuten la función callback `handleKeyPress()`. Puedes usar `document.addEventListener()` el cual toma el evento (en comillas) como primer argumento y la función callback como segundo argumento.
+
+    Posteriormente, en `componentWillUnmount()`, remueve este mismo detector de eventos. Puedes pasar los mismos argumentos al `document.removeEventListener()`. Es buena práctica usar este método del ciclo de vida para hacer cualquier limpieza en un componente de React antes de que estos sean desmontados y destruidos. Removiendo los detectores de eventos es un ejemplo de una limpieza de este tipo.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                message: ''
+            };
+            this.handleEnter = this.handleEnter.bind(this);
+            this.handleKeyPress = this.handleKeyPress.bind(this);
+        }
+        // Cambia el código debajo de esta línea
+        componentDidMount() {
+            document.addEventListener("keydown", this.handleKeyPress);   
+        }
+        componentWillUnmount() {
+            document.removeEventListener("keydown", this.handleKeyPress);
+        }
+        // Cambia el código encima de esta línea
+        handleEnter() {
+            this.setState((state) => ({
+                message: state.message + 'You pressed the enter key! '
+            }));
+        }
+        handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                this.handleEnter();
+            }
+        }
+        render() {
+            return (
+                <div>
+                    <h1>{this.state.message}</h1>
+                </div>
+            );
+        }
+    };        
     ```
-35. 
-    Leccion original [FCC]()
+
+35. Optimiza re-renderizadores con shouldComponentUpdate
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/optimize-re-renders-with-shouldcomponentupdate)
+
     **Ejercicio**
-    ```js        
+    El método shouldComponentUpdate() se añade en un componente llamado OnlyEvens. Actualmente, este método devuelve true, así que OnlyEvens re-renderiza cada vez que recibe nuevos props. Modifica el método para que OnlyEvens se actualice sólo si el value de sus nuevos "props" es par. Haz clic en el botón Add y observa el orden de los eventos en la consola de tu navegador mientras se activan los "hooks" del ciclo de vida.
+
+    ```js
+    class OnlyEvens extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        shouldComponentUpdate(nextProps, nextState) {
+            console.log('Should I update?');
+            // Cambia el código debajo de esta línea
+            if (nextProps.value % 2 == 0) {
+                return true;
+            }
+            return false;
+            // Cambia el código encima de esta línea
+        }
+        componentDidUpdate() {
+            console.log('Component re-rendered.');
+        }
+        render() {
+            return <h1>{this.props.value}</h1>;
+        }
+    }
+
+    class Controller extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                value: 0
+            };
+            this.addValue = this.addValue.bind(this);
+        }
+        addValue() {
+            this.setState(state => ({
+                value: state.value + 1
+            }));
+        }
+        render() {
+            return (
+                <div>
+                    <button onClick={this.addValue}>Add</button>
+                    <OnlyEvens value={this.state.value} />
+                </div>
+            );
+        }
+    }        
     ```
-36. 
-    Leccion original [FCC]()
+
+36. Introducción a los estilos en línea
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/introducing-inline-styles)
+
     **Ejercicio**
-    ```js        
+    Agrega un atributo `style` al `div` en el editor de código para darle al texto un color rojo y un tamaño de fuente de `72px`.
+
+    Ten en cuenta que puedes establecer opcionalmente el tamaño de la fuente para que sea un número, omitiendo las unidades `px`, o escribirlo como `72px`.
+
+    ```js
+    class Colorful extends React.Component {
+        render() {
+            return (
+                <div style={{color: "red", fontSize: 72}}>Big Red</div>
+            );
+        }
+    };        
     ```
-37. 
-    Leccion original [FCC]()
+
+37. Agrega inline styles en React
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/add-inline-styles-in-react)
+    
     **Ejercicio**
-    ```js        
+    Si tienes una gran cantidad de estilos, puedes asignar un `object` de estilos a una constante para mantener tu código organizado. Declara tu constante "styles" como una variable global al principio del archivo. Inicializa la constante `styles` y asígnale un `object` con tres propiedades de estilo y sus valores. Dale al `div` un color `purple`, un tamaño de fuente de `40` y un borde `2px solid purple`. Luego asigna al atributo `style` la constante `styles`.
+
+    ```js
+    const styles = {
+        color: 'purple',
+        fontSize: 40,
+        border: "2px solid purple",
+    };
+    // Cambia el código encima de esta línea
+    class Colorful extends React.Component {
+        render() {
+            // Cambia el código debajo de esta línea
+            return (
+                <div style={styles}>Style Me!</div>
+            );
+            // Cambia el código encima de esta línea
+        }
+    };        
     ```
-38. 
-    Leccion original [FCC]()
+
+38. Usa JavaScript avanzado en el método render de React
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-advanced-javascript-in-react-render-method)
+
     **Ejercicio**
-    ```js        
+    En el código proporcionado, el método `render` tiene un arreglo que contiene 20 frases para representar las respuestas encontradas en el clásico juego "Magic Eight Ball" de los años ochenta. El evento clic del botón está vinculado al método `ask`, por lo que cada vez que se haga clic en el botón se generará un número aleatorio y se almacenará como el `randomIndex` en el state. En la línea 52, elimina la cadena `change me!` y reasigna la constante `answer` para que tu código acceda aleatoriamente a un índice diferente del arreglo `possibleAnswers` cada vez que se actualiza el componente. Finalmente, inserta la constante `answer` dentro de las etiquetas `p`.
+
+    ```js
+    const inputStyle = {
+        width: 235,
+        margin: 5
+    };
+
+    class MagicEightBall extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                userInput: '',
+                randomIndex: ''
+            };
+            this.ask = this.ask.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+        }
+        ask() {
+            if (this.state.userInput) {
+                this.setState({
+                    randomIndex: Math.floor(Math.random() * 20),
+                    userInput: ''
+                });
+            }
+        }
+        handleChange(event) {
+            this.setState({
+                userInput: event.target.value
+            });
+        }
+        render() {
+            const possibleAnswers = [
+                'It is certain',
+                'It is decidedly so',
+                'Without a doubt',
+                'Yes, definitely',
+                'You may rely on it',
+                'As I see it, yes',
+                'Outlook good',
+                'Yes',
+                'Signs point to yes',
+                'Reply hazy try again',
+                'Ask again later',
+                'Better not tell you now',
+                'Cannot predict now',
+                'Concentrate and ask again',
+                "Don't count on it",
+                'My reply is no',
+                'My sources say no',
+                'Most likely',
+                'Outlook not so good',
+                'Very doubtful'
+            ];
+            const answer = possibleAnswers[this.state.randomIndex]; // Cambia esta línea
+            return (
+                <div>
+                    <input
+                    type='text'
+                    value={this.state.userInput}
+                    onChange={this.handleChange}
+                    style={inputStyle}
+                    />
+                    <br />
+                    <button onClick={this.ask}>Ask the Magic Eight Ball!</button>
+                    <br />
+                    <h3>Answer:</h3>
+                    <p>
+                        {/* Cambia el código debajo de esta línea */}
+                        <p>
+                            {answer}          
+                        </p>
+                        {/* Cambia el código encima de esta línea */}
+                    </p>
+                </div>
+            );
+        }
+    }        
     ```
-39. 
-    Leccion original [FCC]()
+
+39. Renderiza con una condición If-Else
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/render-with-an-if-else-condition)
+
     **Ejercicio**
-    ```js        
+
+    `MyComponent` contiene un `boolean` en su estado que rastrea si deseas mostrar algún elemento en la interfaz de usuario o no. El `button` alterna el estado de este valor. Actualmente, renderiza la misma interfaz de usuario cada vez. Reescribir el método `render()` con una sentencia `if/else` de modo que si `display` es `true`, devuelvas el marcado actual. De lo contrario, devuelve el marcado sin el elemento `h1`.
+
+    Note: Debes escribir un `if/else` para pasar las pruebas. El uso del operador ternario no pasará aquí.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                display: true
+            }
+            this.toggleDisplay = this.toggleDisplay.bind(this);
+        }
+        toggleDisplay() {
+            this.setState((state) => ({
+                display: !state.display
+            }));
+        }
+        render() {
+            // Cambia el código debajo de esta línea
+            if (this.state.display) {
+                return (
+                    <div>
+                        <button onClick={this.toggleDisplay}>Toggle Display</button>
+                        <h1>Displayed!</h1>
+                    </div>
+                );
+            } else { 
+                return (
+                    <div>
+                        <button onClick={this.toggleDisplay}>Toggle Display</button>
+                    </div>
+                );
+            }       
+        }
+    };        
     ```
-40. 
-    Leccion original [FCC]()
+
+40. Usa && para una condicional más concisa
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use--for-a-more-concise-conditional)
+    
     **Ejercicio**
-    ```js        
+    Resuelve el ejemplo anterior de nuevo, de este modo el `h1` solo renderiza si `display` es `true`, pero usa el operador lógico `&&` en lugar de una sentencia `if/else`.
+
+    ```js
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                display: true
+            }
+            this.toggleDisplay = this.toggleDisplay.bind(this);
+        }
+        toggleDisplay() {
+            this.setState(state => ({
+                display: !state.display
+            }));
+        }
+        render() {
+            // Cambia el código debajo de esta línea
+            return (
+                <div>
+                    <button onClick={this.toggleDisplay}>Toggle Display</button>
+                    {this.state.display && <h1>Displayed!</h1>}
+                </div>
+            );
+        }
+    };
     ```
-41. 
-    Leccion original [FCC]()
+
+41. Utiliza una expresión ternaria para el renderizado condicional
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-a-ternary-expression-for-conditional-rendering)
+    
     **Ejercicio**
-    ```js        
+    El editor de código tiene tres constantes definidas dentro del método `render()` del componente `CheckUserAge`. Estas se llaman `buttonOne`, `buttonTwo` y `buttonThree`. A cada una de estas se le asigna una expresión JSX simple que representa un elemento de botón. Primero, inicializa el estado de `CheckUserAge` con `input` y `userAge` ambos configurados a valores de una cadena vacía.
+
+    Una vez que el componente está renderizando información a la página, los usuarios deberían tener una forma de interactuar con ella. Dentro de la declaración `return` del componente, configura una expresión ternaria que implementa la siguiente lógica: cuando la página carga por primera vez, renderiza el botón de envío, `buttonOne`, a la página. Luego, cuando un usuario ingrese su edad y haga clic en el botón, renderiza un botón diferente basado en la edad. Si un usuario introduce un número menor que `18`, renderiza `buttonThree`. Si un usuario introduce un número mayor o igual a `18`, renderiza `buttonTwo`.
+
+    ```js
+    const inputStyle = {
+        width: 235,
+        margin: 5
+    };
+
+    class CheckUserAge extends React.Component {
+        constructor(props) {
+            super(props);
+            // Cambia el código debajo de esta línea
+
+            // Cambia el código encima de esta línea
+            this.submit = this.submit.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+        }
+        handleChange(e) {
+            this.setState({
+                input: e.target.value,
+                userAge: ''
+            });
+        }
+        submit() {
+            this.setState(state => ({
+                userAge: state.input
+            }));
+        }
+        render() {
+            const buttonOne = <button onClick={this.submit}>Submit</button>;
+            const buttonTwo = <button>You May Enter</button>;
+            const buttonThree = <button>You Shall Not Pass</button>;
+            return (
+                <div>
+                    <h3>Enter Your Age to Continue</h3>
+                    <input
+                        style={inputStyle}
+                        type='number'
+                        value={this.state.input}
+                        onChange={this.handleChange}
+                    />
+                    <br />
+                    {/* Cambia el código debajo de esta línea */}
+
+                    {/* Cambia el código encima de esta línea */}
+                </div>
+            );
+        }
+    }        
     ```
+
 42. 
     Leccion original [FCC]()
     **Ejercicio**
