@@ -3542,7 +3542,7 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
 
     Finalmente, haz clic en el botón para ver la renderizado condicional del componente basado en su `state`.
 
-    **Pista**: ¡No olvides enlazar la palabra clave `this` al método en el constructor!
+    **Nota**: ¡No olvides enlazar la palabra clave `this` al método en el constructor!
 
     ```js
     class MyComponent extends React.Component {
@@ -3552,11 +3552,19 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
                 visibility: false
             };
             // Cambia el código debajo de esta línea
-
+            this.toggleVisibility = this.toggleVisibility.bind(this);
             // Cambia el código encima de esta línea
         }
         // Cambia el código debajo de esta línea
-
+        toggleVisibility() {
+            this.setState(state => {
+                if (state.visibility === true) {
+                    return { visibility: false };
+                } else {
+                    return { visibility: true };
+                }
+            });
+        }
         // Cambia el código encima de esta línea
         render() {
             if (this.state.visibility) {
@@ -3576,9 +3584,16 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
         }
     }        
     ```
-27. 
-    Leccion original [FCC]()
+
+27. Escribe un contador simple
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/write-a-simple-counter)
+    
     **Ejercicio**
+    El componente `Counter` mantiene un seguimiento de un valor `count` en el `state`. Hay dos botones que llaman a métodos `increment()` y `decrement()`. Escribe estos métodos para que el valor del contador sea incrementado o disminuyendo por 1 cuando se haga clic en el botón apropiado. También, crea un método `reset()` para que cuando se haga clic en el botón reset, el contador se establezca a 0.
+
+    **Nota**: Asegúrate de no modificar el `className` de los botones. Además, recuerda agregar en el constructor los enlaces necesarios para los métodos recién creados.
+    
     ```js        
     ```
 28. 
