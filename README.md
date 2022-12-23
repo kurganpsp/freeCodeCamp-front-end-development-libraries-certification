@@ -4268,7 +4268,12 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
                     />
                     <br />
                     {/* Cambia el código debajo de esta línea */}
-
+                    {
+                        this.state.userAge === '' ? buttonOne
+                            : this.state.userAge >= 18
+                                ? buttonTwo
+                                : buttonThree
+                    }
                     {/* Cambia el código encima de esta línea */}
                 </div>
             );
@@ -4276,31 +4281,124 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
     }        
     ```
 
-42. 
-    Leccion original [FCC]()
+42. Renderiza condicionalmente a partir de "props"
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/render-conditionally-from-props)
+
+    **Ejercicio**
+    El editor de código tiene dos componentes que están parcialmente definidos para ti: un padre llamado `GameOfChance`, y un hijo llamado `Results`. Se utilizan para crear un juego sencillo en el que el usuario presiona un botón para ver si gana o pierde.
+
+    Primero, necesitarás una expresión simple que devuelva al azar un valor diferente cada vez que se ejecute. Puedes usar `Math.random()`. Este método devuelve un valor entre `0` (inclusivo) y `1` (exclusivo) cada vez que se llama. Así que para las probabilidades de 50/50, usa `Math.random() >= .5` en tu expresión. Estadísticamente hablando, esta expresión devolverá `true` 50% de las veces, y `false` el otro 50%. En el método de renderizado, reemplaza `null` con la expresión anterior para completar la declaración de variables.
+
+    Ahora tienes una expresión que puedes usar para tomar una decisión aleatoria en el código. A continuación, debes implementar esto. Renderiza el componente `Results` como hijo de `GameOfChance`, y pásalo a `expression` como un prop llamado `fiftyFifty`. En el componente `Results`, escribe una expresión ternaria para renderizar el elemento `h1` con el texto `You Win!` o `You Lose!` basado en el prop `fiftyFifty` que está siendo pasado desde `GameOfChance`. Finalmente, asegúrate de que el método `handleClick()` está contando correctamente cada turno para que el usuario sepa cuántas veces ha jugado. Esto también sirve para que el usuario sepa que el componente se ha actualizado en caso de que gane o pierda dos veces seguidas.
+
+    ```js
+    class Results extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            {/* Cambia el código debajo de esta línea */}
+            return (
+                <h1>
+                {this.props.fiftyFifty ? "You Win!" : "You Lose!"}
+                </h1>
+            )
+            {/* Cambia el código encima de esta línea */}
+        }
+    }
+
+    class GameOfChance extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                counter: 1
+            };
+            this.handleClick = this.handleClick.bind(this);
+        }
+        handleClick() {
+            this.setState({
+                counter: this.state.counter + 1 // change code here
+            });
+        }
+        render() {
+            const expression = Math.random() >= 0.5 ? true : false; // Cambia esta línea
+            return (
+                <div>
+                    <button onClick={this.handleClick}>Play Again</button>
+                    {/* Cambia el código debajo de esta línea */}
+                    <Results fiftyFifty={expression} />
+                    {/* Cambia el código encima de esta línea */}
+                    <p>{'Turn: ' + this.state.counter}</p>
+                </div>
+            );
+        }
+    }        
+    ```
+
+43. Cambia el CSS inline condicionalmente según el estado del componente
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/change-inline-css-conditionally-based-on-component-state)
+    
+    **Ejercicio**
+    El editor de código tiene un simple componente de entrada controlado, con un estilo de borde. Quieres aplicar un estilo rojo a este borde si el usuario escribe más de 15 caracteres de texto en la casilla de entrada. Agrega una condición para verificarlo y, si la condición es válida, establece el estilo del borde de la casilla de entrada como `3px solid red`. Puedes probarlo introduciendo texto en la casilla de entrada.
+    
+    ```js        
+    class GateKeeper extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: ''
+            };
+            this.handleChange = this.handleChange.bind(this);
+        }
+        handleChange(event) {
+            this.setState({ input: event.target.value })
+        }
+        render() {
+            let inputStyle = {
+                border: '1px solid black'
+            };
+            // Cambia el código debajo de esta línea
+            if (this.state.input.length > 15) {
+                inputStyle.border = '3px solid red';
+            }
+            // Cambia el código encima de esta línea
+            return (
+                <div>
+                    <h3>Don't Type Too Much:</h3>
+                    <input
+                        type="text"
+                        style={inputStyle}
+                        value={this.state.input}
+                        onChange={this.handleChange} 
+                    />
+                </div>
+            );
+        }
+    };
+    ```
+
+44. Utiliza Array.map() para renderizar dinámicamente los elementos
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-array-map-to-dynamically-render-elements)
+    
     **Ejercicio**
     ```js        
     ```
-43. 
-    Leccion original [FCC]()
-    **Ejercicio**
-    ```js        
-    ```
-44. 
-    Leccion original [FCC]()
-    **Ejercicio**
-    ```js        
-    ```
+
 45. 
     Leccion original [FCC]()
     **Ejercicio**
     ```js        
     ```
+
 46. 
     Leccion original [FCC]()
     **Ejercicio**
     ```js        
     ```
+
 47. 
     Leccion original [FCC]()
     **Ejercicio**
