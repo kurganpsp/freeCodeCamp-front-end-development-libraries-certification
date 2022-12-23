@@ -4384,27 +4384,537 @@ En este curso, aprenderás cómo crear diferentes componentes de *React*, admini
     Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-array-map-to-dynamically-render-elements)
     
     **Ejercicio**
-    ```js        
+    El editor de código tiene la mayoría del componente `MyToDoList` configurado. Parte de este código debería parecer familiar si completaste el desafío de formulario controlado. Vas a notar un `textarea` y un `button`, junto con un par de métodos que rastrean sus estados, pero aún no se muestra nada a la página.
+
+    Dentro del `constructor`, crea un objeto `this.state` y define dos estados: `userInput` que debe inicializarse como una cadena vacía, y `toDoList` que debe inicializarse como un arreglo vacío. Luego, elimina el valor `null` del método `render()` a un costado de la variable `items`. En su lugar, utiliza la función `map()` para recorrer el arreglo `toDoList` almacenado en el estado interno del componente y renderizar un `li` por cada artículo. Intenta introducir la cadena `eat, code, sleep, repeat` dentro del `textarea`, haz clic en el botón y ve qué sucede.
+
+    **Nota**: Puede que sepas que todos los elementos hijos hermanos creados por una operación map como ésta necesitan poseer un atributo `key` único. No te preocupes, este es el tema de nuestro próximo desafío.
+
+    ```js
+    const textAreaStyles = {
+        width: 235,
+        margin: 5
+    };
+
+    class MyToDoList extends React.Component {
+        constructor(props) {
+            super(props);
+            // Cambia el código debajo de esta línea
+            this.state = {
+                userInput: '',
+                toDoList: []
+            }
+            // Cambia el código encima de esta línea
+            this.handleSubmit = this.handleSubmit.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+        }
+        handleSubmit() {
+            const itemsArray = this.state.userInput.split(',');
+            this.setState({
+                toDoList: itemsArray
+            });
+        }
+        handleChange(e) {
+            this.setState({
+                userInput: e.target.value
+            });
+        }
+        render() {
+            const items = this.state.toDoList.map(i => <li>{i}</li>); // Cambia esta línea
+            return (
+                <div>
+                    <textarea
+                        onChange={this.handleChange}
+                        value={this.state.userInput}
+                        style={textAreaStyles}
+                        placeholder='Separate Items With Commas'
+                    />
+                    <br />
+                    <button onClick={this.handleSubmit}>Create List</button>
+                    <h1>My "To Do" List:</h1>
+                    <ul>{items}</ul>
+                </div>
+            );
+        }
+    }        
     ```
 
-45. 
-    Leccion original [FCC]()
+45. Proporciona a los elementos hermanos un atributo de clave única
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/give-sibling-elements-a-unique-key-attribute)
+    
     **Ejercicio**
-    ```js        
+    El editor de código tiene un arreglo con algunos frameworks frontend y un componente funcional sin estado llamado `Frameworks()`. `Frameworks()` necesita mapear (asignar) el arreglo a una lista desordenada, como en el último desafío. Finaliza la escritura de la función callback `map` para devolver un elemento `li` por cada framework en el arreglo `frontEndFrameworks`. Esta vez, debes asegurarte de dar a cada elemento `li` un atributo `key`, establecido a un valor único. Los elementos `li` también deben contener texto de `frontEndFrameworks`.
+
+    Normalmente, deseas hacer que la clave sea algo que identifique de manera única el elemento que se está procesando. Como último recurso se puede utilizar el índice del arreglo, pero normalmente se debe intentar usar una identificación única.
+
+    ```js
+    const frontEndFrameworks = [
+        'React',
+        'Angular',
+        'Ember',
+        'Knockout',
+        'Backbone',
+        'Vue'
+    ];
+
+    function Frameworks() {
+        const renderFrameworks = frontEndFrameworks.map(
+            (item) => <li key={item}>{item}</li>
+        ); // Cambia esta línea
+        return (
+            <div>
+            <h1>Popular Front End JavaScript Frameworks</h1>
+            <ul>
+                {renderFrameworks}
+            </ul>
+            </div>
+        );
+    };        
     ```
 
-46. 
-    Leccion original [FCC]()
+46. Usa Array.filter() para filtrar dinámicamente un arreglo
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/use-array-filter-to-dynamically-filter-an-array)
+    
     **Ejercicio**
+    En el editor de código, el `state` de `MyComponent` es inicializado con un arreglo de usuarios. Algunos usuarios están conectados y otros no. Filtra el arreglo para que sólo veas a los usuarios que están en línea. Para hacer esto, primero usa `filter` para devolver un nuevo arreglo que contiene solo a los usuarios cuya propiedad `online` es `true`. Luego, en la variable `renderOnline`, asigna sobre el arreglo filtrado, y devuelve un elemento `li` para cada usuario que contiene el texto de su `username`. Asegúrate de incluir también una única `key`, como en los últimos desafíos.
+
     ```js        
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                users: [
+                    {
+                        username: 'Jeff',
+                        online: true
+                    },
+                    {
+                        username: 'Alan',
+                        online: false
+                    },
+                    {
+                        username: 'Mary',
+                        online: true
+                    },
+                    {
+                        username: 'Jim',
+                        online: false
+                    },
+                    {
+                        username: 'Sara',
+                        online: true
+                    },
+                    {
+                        username: 'Laura',
+                        online: true
+                    }
+                ]
+            };
+        }
+        render() {
+            const usersOnline = this.state.users.filter(user => user.online === true); // Cambia esta línea
+            const renderOnline = usersOnline.map(user => <li key={user.username}>{user.username}</li>); // Cambia esta línea
+            return (
+                <div>
+                    <h1>Current Online Users:</h1>
+                    <ul>{renderOnline}</ul>
+                </div>
+            );
+        }
+    }
     ```
 
-47. 
-    Leccion original [FCC]()
+47. Renderiza React en el servidor con renderToString
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react/render-react-on-the-server-with-rendertostring)
+
     **Ejercicio**
-    ```js        
+    El método `renderToString()` se proporciona en `ReactDOMServer`, el cual está disponible aquí como un objeto global. El método toma un argumento que es un elemento React. Usa esto para renderizar `App` a una cadena.
+
+    ```js
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return <div/>
+        }
+    };
+
+    // Cambia el código debajo de esta línea
+    ReactDOMServer.renderToString(<App />)
     ```
 
 # Redux
+
+En este curso, aprenderás los fundamentos de almacenamiento en Redux, así como de las acciones, reductores e intermediarios para administrar datos a lo largo de tu aplicación.
+
+1. Crea un almacén Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/create-a-redux-store)
+
+    **Ejercicio**
+    El `store` (almacén) de Redux es un objeto que guarda y gestiona el `state` (estado) de la aplicación. Hay un método llamado `createStore()` en el objeto Redux, que se utiliza para crear el `store` Redux. Este método toma una función `reducer` como argumento obligatorio. La función `reducer` se trata en un desafío posterior, y ya está definida para ti en el editor de código. Simplemente toma `state` como argumento y devuelve `state`.
+
+    Declara una variable `store` y asígnala al método `createStore()`, pasando el `reducer` como argumento.
+
+    **Nota**: El código del editor utiliza la sintaxis de los argumentos por defecto de ES6 para inicializar este estado y mantener un valor de `5`. Si no está familiarizado con los argumentos predeterminados, puede consultar elES6 section in the Curriculum que cubre este tema.
+
+    ```js
+    const reducer = (state = 5) => {
+        return state;
+    }
+
+    // Los métodos Redux están disponibles desde un objeto Redux
+    // Por ejemplo: Redux.createStore()
+    // Define el store aquí:
+    let store = Redux.createStore(reducer)
+    ```
+
+2. Obtén el estado del almacén Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/get-state-from-the-redux-store)
+
+    **Ejercicio**
+    El código del desafío anterior se reescribe de forma más concisa en el editor de código. Utiliza `store.getState()` para recuperar el `state` del `store`, y asígnalo a una nueva variable `currentState`.
+
+    ```js
+    const store = Redux.createStore(
+        (state = 5) => state
+    );
+
+    // Cambia el código debajo de esta línea
+    let currentState = store.getState()
+    ```
+
+3.  Define una acción Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/define-a-redux-action)
+
+    **Ejercicio**
+    Escribir una acción Redux es tan sencillo como declarar un objeto con una propiedad de tipo. Declara un objeto `action` y dale una propiedad `type` establecida a la cadena `'LOGIN'`.
+
+    ```js
+    // Define una acción aquí:
+    let action={
+        type: 'LOGIN'
+    }
+    ```
+
+4. Define un creador de acción
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/define-an-action-creator)
+
+    **Ejercicio**
+    Define una función llamada `actionCreator()` que devuelve el objeto `action` cuando es llamado.
+
+    ```js
+    const action = {
+        type: 'LOGIN'
+    }
+    // Define un creador de acción aquí:
+    function actionCreator() {
+        return action
+    }
+    ```
+
+5. Envía un evento de acción
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/dispatch-an-action-event)
+    
+    **Ejercicio**
+    El almacén Redux en el editor de código tiene un estado inicializado que es un objeto que contiene una propiedad `login` actualmente establecida a `false`. También hay un creador de acción llamado `loginAction()` que devuelve una acción de tipo `LOGIN`. Envía la acción `LOGIN` al almacén Redux llamando al método `dispatch`, y pasa la acción creada por `loginAction()`.
+
+    ```js
+    const store = Redux.createStore(
+        (state = {login: false}) => state
+    );
+
+    const loginAction = () => {
+        return {
+            type: 'LOGIN'
+        }
+    };
+
+    // Despacha la acción aquí:
+    store.dispatch(loginAction());
+    ```
+
+6. Maneja una acción en el almacén
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/handle-an-action-in-the-store)
+
+    **Ejercicio**
+    El editor de código tiene el ejemplo anterior, así como el inicio de una función `reducer` para ti. Rellena el cuerpo de la función reducer para que si recibe una acción de tipo `'LOGIN'` devuelva un objeto de estado con `login` establecido a `true`. De lo contrario, devuelve el `state` actual. Ten en cuenta que el `state` actual y la `action` enviada se pasan al reductor, por lo que puedes acceder al tipo de la acción directamente con `action.type`.
+
+    ```js
+    const defaultState = {
+        login: false
+    };
+
+    const reducer = (state = defaultState, action) => {
+        // Cambia el código debajo de esta línea
+        if (action.type === "LOGIN") {
+            return {
+                login: true
+            };
+        } else {
+            return state;
+        }
+        // Cambia el código encima de esta línea
+    };
+
+    const store = Redux.createStore(reducer);
+
+    const loginAction = () => {
+        return {
+            type: 'LOGIN'
+        }
+    };
+    ```
+
+7. Usa una sentencia Switch para manejar múltiples acciones
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/use-a-switch-statement-to-handle-multiple-actions)
+
+    **Ejercicio**
+    El editor de código tiene un almacén, acciones y creadores de acción configurados para ti. Rellena la función `reducer` para manejar múltiples acciones de autenticación. Usa una sentencia `switch` de JavaScript en el `reducer` para responder a diferentes eventos de acción. Este es un patrón estándar en la escritura de reductores Redux. La sentencia switch debe cambiar sobre `action.type` y devolver el estado de autenticación apropiado.
+
+    Nota: En este punto, no te preocupes por la inmutabilidad del estado, ya que es pequeña y simple en este ejemplo. Para cada acción, puedes devolver un nuevo objeto, por ejemplo, `{authenticated: true}`. Además, no olvides escribir un caso `default` en tu sentencia switch que devuelva el `state` actual. Esto es importante porque una vez que tu aplicación tiene múltiples reductores, todos ellos se ejecutan cada vez que se realiza un envío de acción, incluso cuando la acción no está relacionada con ese reductor. En tal caso, querrás asegurarte de que devuelves el `state` actual.
+
+    ```js
+    const defaultState = {
+        authenticated: false
+    };
+
+    const authReducer = (state = defaultState, action) => {
+        // Cambia el código debajo de esta línea
+        switch (action.type) {
+            case "LOGIN":
+            return {
+                authenticated: true
+            };
+
+            case "LOGOUT":
+            return {
+                authenticated: false
+            };
+
+            default:
+            return defaultState;
+        }
+        // Cambia el código encima de esta línea
+    };
+
+    const store = Redux.createStore(authReducer);
+
+    const loginUser = () => {
+        return {
+            type: 'LOGIN'
+        }
+    };
+
+    const logoutUser = () => {
+        return {
+            type: 'LOGOUT'
+        }
+    };
+    ```
+
+8. Usa const para los tipos de acción
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/use-const-for-action-types)
+
+    **Ejercicio**
+    Declara `LOGIN` y `LOGOUT` como valores `const` y asígnalos a las cadenas `'LOGIN'` y `'LOGOUT'`, respectivamente. Luego, edita el `authReducer()` y los creadores de acción para que hagan referencia a estas constantes en lugar de valores de cadena.
+
+    **Nota**: Generalmente es una convención escribir las constantes en mayúsculas, y esto es una práctica estándar en Redux también.
+
+    ```js
+    // change code below this line
+    const LOGIN = 'LOGIN';
+    const LOGOUT = 'LOGOUT';
+    // change code above this line
+
+    const defaultState = {
+        authenticated: false
+    };
+
+    const authReducer = (state = defaultState, action) => {
+        switch (action.type) {
+            case LOGIN: 
+            return {
+                authenticated: true
+            }
+            case LOGOUT: 
+            return {
+                authenticated: false
+            }
+            default:
+            return state;
+
+        }
+    };
+
+    const store = Redux.createStore(authReducer);
+
+    const loginUser = () => {
+        return {
+            type: LOGIN
+        }
+    };
+
+    const logoutUser = () => {
+        return {
+            type: LOGOUT
+        }
+    };
+    ```
+
+9. Registra un escucha al almacén
+    
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/register-a-store-listener)
+
+    **Ejercicio**
+    Escribe una función callback que incremente la variable global `count` cada vez que el almacén recibe una acción, y pasa esta función al método `store.subscribe()`. Verás que `store.dispatch()` es llamado tres veces seguidas, cada vez pasando directamente un objeto de acción. Observa la salida de la consola entre los envíos de acción para ver cómo se producen las actualizaciones.
+
+    ```js
+    const ADD = 'ADD';
+
+    const reducer = (state = 0, action) => {
+        switch(action.type) {
+            case ADD:
+            return state + 1;
+            default:
+            return state;
+        }
+    };
+
+    const store = Redux.createStore(reducer);
+
+    // Variable global count:
+    let count = 0;
+
+    // Cambia el código debajo de esta línea
+    function callback() {
+        count++;
+        console.log("count has been incremented");
+    }
+
+    store.subscribe(callback);
+    // Cambia el código encima de esta línea
+
+    store.dispatch({type: ADD});
+    console.log(count);
+    store.dispatch({type: ADD});
+    console.log(count);
+    store.dispatch({type: ADD});
+    console.log(count);
+    ```
+
+10. Combina múltiples reductores
+    
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/combine-multiple-reducers)
+    
+    **Ejercicio**
+    Están las funciones `counterReducer()` y `authReducer()` proporcionadas en el editor de código, junto con un almacén Redux. Termina de escribir la función `rootReducer()` utilizando el método `Redux.combineReducers()`. Asigna `counterReducer` a una clave llamada `count` y `authReducer` a una clave llamada `auth`.
+
+    ```js
+    const INCREMENT = 'INCREMENT';
+    const DECREMENT = 'DECREMENT';
+
+    const counterReducer = (state = 0, action) => {
+        switch(action.type) {
+            case INCREMENT:
+            return state + 1;
+            case DECREMENT:
+            return state - 1;
+            default:
+            return state;
+        }
+    };
+
+    const LOGIN = 'LOGIN';
+    const LOGOUT = 'LOGOUT';
+
+    const authReducer = (state = {authenticated: false}, action) => {
+        switch(action.type) {
+            case LOGIN:
+            return {
+                authenticated: true
+            }
+            case LOGOUT:
+            return {
+                authenticated: false
+            }
+            default:
+            return state;
+        }
+    };
+
+    const rootReducer = // Define el reductor root aquí
+
+    const store = Redux.createStore(rootReducer);
+    ```
+
+11. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+12. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+13. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+14. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+15. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+16. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+17. titulo
+    
+    Leccion original [FCC]()
+    
+    **Ejercicio**
+    ```js
+    ```
+
+
 # React y Redux
 # Proyectos de librerías de desarrollo de la interfaz
