@@ -4854,67 +4854,854 @@ En este curso, aprenderás los fundamentos de almacenamiento en Redux, así como
         }
     };
 
-    const rootReducer = // Define el reductor root aquí
+    // Define el reductor root aquí
+    const rootReducer = Redux.combineReducers({
+        count: counterReducer,
+        auth: authReducer
+    }); 
 
     const store = Redux.createStore(rootReducer);
     ```
 
-11. titulo
+11. Envía datos de acción al almacén
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/send-action-data-to-the-store)
     
     **Ejercicio**
+    Hay un `notesReducer()` básico y un creador de acción `addNoteText()` definido en el editor de código. Termina el cuerpo de la función `addNoteText()` para que devuelva un objeto `action`. El objeto debe incluir una propiedad `type` con un valor de `ADD_NOTE`, y también una propiedad `text` establecida a los datos de `note` que se pasa al creador de acción. Cuando llames al creador de acción, pasarás información específica de la nota a la que puedes acceder para el objeto.
+
+    A continuación, termina de escribir la sentencia `switch` en el `notesReducer()`. Necesitas añadir un caso que maneje las acciones `addNoteText()`. Este caso debe activarse siempre que haya una acción de tipo `ADD_NOTE` y debe devolver la propiedad `text` de la `action` entrante como el nuevo `state`.
+
+    La acción es enviada en la parte inferior del código. Una vez que hayas terminado, ejecuta el código y observa la consola. Eso es todo lo que se necesita para enviar datos específicos de la acción al almacén y utilizarlos cuando se actualiza el `state` del almacén.
+    
     ```js
+    const ADD_NOTE = 'ADD_NOTE';
+
+    const notesReducer = (state = 'Initial State', action) => {
+        switch(action.type) {
+            // Cambia el código debajo de esta línea
+            case ADD_NOTE:
+                return action.text;
+            // Cambia el código encima de esta línea
+            default:
+            return state;
+        }
+    };
+
+    const addNoteText = (note) => {
+        // Cambia el código debajo de esta línea
+        return {
+            type: ADD_NOTE,
+            text: note
+        };
+        // Cambia el código encima de esta línea
+    };
+
+    const store = Redux.createStore(notesReducer);
+
+    console.log(store.getState());
+    store.dispatch(addNoteText('Hello!'));
+    console.log(store.getState());
     ```
 
-12. titulo
+12. Usa middleware para manejar acciones asíncronas
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/use-middleware-to-handle-asynchronous-actions)
     
     **Ejercicio**
+    Escribe ambos envíos en el creador de acción `handleAsync()`. Envía `requestingData()` antes del `setTimeout()` (la llamada al API simulada). A continuación, después de recibir los datos (fingidos), envía la acción `receivedData()`, pasando estos datos. Ahora ya sabes cómo manejar las acciones asíncronas en Redux. Todo lo demás sigue comportándose como antes.
+
     ```js
+    const REQUESTING_DATA = 'REQUESTING_DATA'
+    const RECEIVED_DATA = 'RECEIVED_DATA'
+
+    const requestingData = () => { return {type: REQUESTING_DATA} }
+    const receivedData = (data) => { return {type: RECEIVED_DATA, users: data.users} }
+
+    const handleAsync = () => {
+        return function(dispatch) {
+            // Despacha la acción request aquí
+            dispatch(requestingData());
+            setTimeout(function() {
+                let data = {
+                    users: ['Jeff', 'William', 'Alice']
+                }
+                // Despacha la acción received data aquí
+                dispatch(receivedData(data));
+            }, 2500);
+        }
+    };
+
+    const defaultState = {
+        fetching: false,
+        users: []
+    };
+
+    const asyncDataReducer = (state = defaultState, action) => {
+        switch(action.type) {
+            case REQUESTING_DATA:
+            return {
+                fetching: true,
+                users: []
+            }
+            case RECEIVED_DATA:
+            return {
+                fetching: false,
+                users: action.users
+            }
+            default:
+            return state;
+        }
+    };
+
+    const store = Redux.createStore(
+        asyncDataReducer,
+        Redux.applyMiddleware(ReduxThunk.default)
+    );
     ```
 
-13. titulo
+13. Escribe un contador con Redux
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/write-a-counter-with-redux)
     
     **Ejercicio**
+    En esta lección, implementarás un simple contador con Redux desde cero. El editor de código proporciona lo básico, ¡pero tendrás que completar los detalles! Utiliza los nombres que se proporcionan y define los creadores de acciones `incAction` y `decAction`, el `counterReducer()`, los tipos de acción `INCREMENT` y `DECREMENT`, y finalmente el `store` de Redux. Una vez que hayas terminado deberías poder enviar acciones `INCREMENT` o `DECREMENT` para incrementar o disminuir el estado mantenido en el `store`. ¡Buena suerte construyendo tu primera aplicación Redux!
+
     ```js
+    const INCREMENT = "INCREMENT"; // Define una constante para acciones de incremento
+    const DECREMENT = "DECREMENT"; // Define una constante para acciones de decremento
+
+    // Define el reductor counter que aumentará o disminuirá el estado en función de la acción que reciba
+    const counterReducer = (state = 0, action) => {
+        switch (action.type) {
+            case INCREMENT:
+            return state + 1;
+
+            case DECREMENT:
+            return state - 1;
+
+            default:
+            return state;
+        }
+    }; 
+    
+    // Define un creador de acción para incrementar
+    const incAction = () => {
+        return {
+            type: INCREMENT
+        };
+    }; 
+
+    // Define un creador de acción para decrementar
+    const decAction = () => {
+        return {
+            type: DECREMENT
+        };
+    }; 
+
+    // Define el store de Redux aquí, pasando tus reductores
+    const store = Redux.createStore(counterReducer); 
     ```
 
-14. titulo
+14. Nunca mutes el estado
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/never-mutate-state)
     
     **Ejercicio**
+    Hay un `store` y un `reducer` en el editor de código para gestionar los elementos de las tareas pendientes. Termina de escribir el caso `ADD_TO_DO` en el reductor para añadir una nueva tarea al estado. Hay algunas maneras de lograr esto con JavaScript estándar o ES6. Ve si puedes encontrar la forma de devolver un nuevo arreglo con el elemento de `action.todo` añadido al final.
+
     ```js
+    const ADD_TO_DO = 'ADD_TO_DO';
+
+    // Una lista de cadenas de texto representando tareas por hacer:
+    const todos = [
+        'Go to the store',
+        'Clean the house',
+        'Cook dinner',
+        'Learn to code',
+    ];
+
+    const immutableReducer = (state = todos, action) => {
+        switch(action.type) {
+            case ADD_TO_DO:
+            // No mutes el estado aquí o la prueba fallará
+            return state.concat(action.todo);
+            default:
+            return state;
+        }
+    };
+
+    const addToDo = (todo) => {
+        return {
+            type: ADD_TO_DO,
+            todo
+        }
+    }
+
+    const store = Redux.createStore(immutableReducer);
     ```
 
-15. titulo
+15. Usa el operador de propagación en arreglos
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/use-the-spread-operator-on-arrays)
     
     **Ejercicio**
+    Utiliza el operador de propagación para devolver una nueva copia del estado cuando se añade una tarea.
+
     ```js
+    const immutableReducer = (state = ['Do not mutate state!'], action) => {
+        switch(action.type) {
+            case 'ADD_TO_DO':
+            // No mutes el estado aquí o la prueba fallará
+            return [...state, action.todo];
+            default:
+            return state;
+        }
+    };
+
+    const addToDo = (todo) => {
+        return {
+            type: 'ADD_TO_DO',
+            todo
+        }
+    }
+
+    const store = Redux.createStore(immutableReducer);
     ```
 
-16. titulo
+16. Elimina un elemento de un arreglo
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/remove-an-item-from-an-array)
     
     **Ejercicio**
+    El reductor y el creador de acción fueron modificados para eliminar un elemento de un arreglo en función del índice del elemento. Termina de escribir el reductor para que devuelva un nuevo arreglo de estados con el elemento en el índice específico eliminado.
+
     ```js
+    const immutableReducer = (state = [0,1,2,3,4,5], action) => {
+        switch(action.type) {
+            case 'REMOVE_ITEM':
+            // No mutes el estado aquí o la prueba fallará
+            // Usando el índice de la acción y el índice de Array.prototype.filter() para filtrar el elemento.
+            return state.filter((_, index) => index !== action.index);
+            default:
+            return state;
+        }
+    };
+
+    const removeItem = (index) => {
+        return {
+            type: 'REMOVE_ITEM',
+            index
+        }
+    }
+
+    const store = Redux.createStore(immutableReducer);
     ```
 
-17. titulo
+17. Copia un objeto con Object.assign
     
-    Leccion original [FCC]()
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/redux/copy-an-object-with-object-assign)
     
     **Ejercicio**
+    El estado y las acciones de Redux fueron modificados para manejar un `object` para el `state`. Edita el código para devolver un nuevo objeto `state` para las acciones de tipo `ONLINE`, que establece la propiedad `status` a la cadena `online`. Intenta utilizar `Object.assign()` para completar el desafío.
+
     ```js
+    const defaultState = {
+        user: 'CamperBot',
+        status: 'offline',
+        friends: '732,982',
+        community: 'freeCodeCamp'
+    };
+
+    const immutableReducer = (state = defaultState, action) => {
+        switch(action.type) {
+            case 'ONLINE':
+            // No mutes el estado aquí o la prueba fallará
+            return Object.assign({}, state, { status: "online" });
+            default:
+            return state;
+        }
+    };
+
+    const wakeUp = () => {
+        return {
+            type: 'ONLINE'
+        }
+    };
+
+    const store = Redux.createStore(immutableReducer);
     ```
 
 
 # React y Redux
+
+Ahora que sabes cómo administrar el flujo de datos compartidos con Redux, es hora de combinar ese conocimiento con React. En los cursos de React y Redux, construirás un componente de React y aprenderás cómo administrar el estado localmente a un nivel de componentes, y a lo largo de toda la aplicación con Redux.
+
+1. Introducción a React Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/getting-started-with-react-redux)    
+
+    **Ejercicio**
+    Comienza con un componente `DisplayMessages`. Añade un constructor a este componente e inicialízalo con un estado que tenga dos propiedades: `input`, que se establece como una cadena vacía, y `messages`, que se establece como un arreglo vacío.
+
+    ```js
+    class DisplayMessages extends React.Component {
+        // Cambia el código debajo de esta línea
+        constructor(props){
+            super(props);
+            this.state={
+                input:'',
+                messages:[]
+            }
+        }
+        // Cambia el código encima de esta línea
+        render() {
+            return <div />
+        }
+    };
+    ```
+
+2. Gestiona el estado localmente primero
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/manage-state-locally-first)    
+
+    **Ejercicio**
+    En primer lugar, en el método `render()`, haz que el componente renderice un elemento `input`, un elemento `button` y un elemento `ul`. Cuando el elemento `input` cambia, debe activar un método `handleChange()`. Además, el elemento `input` debe renderizar el valor de `input` que está en el estado del componente. El elemento `button` debe activar un método `submitMessage()` cuando se hace clic en él.
+
+    En segundo lugar, escribe estos dos métodos. El método `handleChange()` debe actualizar el `input` con lo que el usuario está escribiendo. El método `submitMessage()` debe concatenar el mensaje actual (almacenado en `input`) al arreglo `messages` del estado local, y borrar el valor de `input`.
+
+    Por último, utiliza el `ul` para asignar el arreglo de `messages` y renderizarlo en la pantalla como una lista de elementos `li`.
+
+    ```js
+    class DisplayMessages extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: '',
+                messages: []
+            }
+        }
+        // Agrega los métodos handleChange() y submitMessage() aquí
+        handleChange(event){
+            this.setState({
+                input: event.target.value,
+                messages: this.state.messages
+            })
+        }
+
+        submitMessage(){
+            this.setState({
+                input: '',
+                messages: [...this.state.messages, this.state.input]
+            })
+        }
+
+        render() {
+            return (
+                <div>
+                    <h2>Type in a new Message:</h2>
+                    { /* Renderiza un input, button, y ul debajo de esta línea */ }
+                    <input onChange={this.handleChange.bind(this)} value={this.state.input}/>
+                    <button onClick={this.submitMessage.bind(this)}>Submit</button>
+                    <ul>
+                        {this.state.messages.map((x, i)=>{
+                            return <li key={i}>{x}</li>
+                        })}
+                    </ul>
+                    { /* Cambia el código encima de esta línea */ }
+                </div>
+            );
+        }
+    };
+    ```
+
+3. Extrae la lógica de estado a Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/extract-state-logic-to-redux)    
+
+    **Ejercicio**
+    En primer lugar, define un tipo de acción `ADD` y asígnalo a una const `ADD`. A continuación, define un creador de acciones `addMessage()` que crea la acción para añadir un mensaje. Tendrás que pasar un `message` a este creador de acciones e incluir el mensaje en la `action` devuelta.
+
+    Luego crea un reductor llamado `messageReducer()` que maneja el estado de los mensajes. El estado inicial debe ser igual a un arreglo vacío. Este reductor debe añadir un mensaje al arreglo de mensajes mantenido en el estado, o devolver el estado actual. Finalmente, crea tu almacén Redux y pásale el reductor.
+
+    ```js
+    // Define ADD, addMessage(), messageReducer(), y store aquí:
+    const ADD = "ADD";
+    const addMessage = message => {
+        return {
+            type: ADD,
+            message
+        };
+    };
+
+    // Use ES6 default paramter to give the 'previousState' parameter an initial value.
+    const messageReducer = (previousState = [], action) => {
+        // Use switch statement to lay out the reducer logic in response to different action type
+        switch (action.type) {
+            case ADD:
+            // Use ES6 spread operator to return a new array where the new message is added to previousState
+            return [...previousState, action.message];
+            break;
+
+            default:
+            // A default case to fall back on in case if the update to Redux store is not for this specific state.
+            return previousState;
+        }
+    };
+
+    const store = Redux.createStore(messageReducer);
+    ```
+
+4. Usa "Provider" para conectar Redux a React
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/use-provider-to-connect-redux-to-react)    
+
+    **Ejercicio**
+    El editor de código ahora muestra todo tu código Redux y React de los últimos desafíos. Incluye el almacén Redux, las acciones y el componente `DisplayMessages`. La única pieza nueva es el componente `AppWrapper` de la parte inferior. Usa este componente de nivel superior para renderizar el `Provider` de `ReactRedux`, y pasa el almacén Redux como prop. Luego, renderiza el componente `DisplayMessages` como hijo. Una vez que hayas terminado, deberías ver tu componente React renderizado en la página.
+
+    **Nota**: React Redux está disponible como una variable global aquí, por lo que puedes acceder al "Provider" con notación de puntos. El código del editor aprovecha esto y lo establece en una constante `Provider` para que lo uses en el método de renderizado `AppWrapper`.
+
+    ```js
+    // Redux:
+    const ADD = 'ADD';
+
+    const addMessage = (message) => {
+        return {
+            type: ADD,
+            message
+        }
+    };
+
+    const messageReducer = (state = [], action) => {
+        switch (action.type) {
+            case ADD:
+            return [
+                ...state,
+                action.message
+            ];
+            default:
+            return state;
+        }
+    };
+
+    const store = Redux.createStore(messageReducer);
+
+    // React:
+
+    class DisplayMessages extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: '',
+                messages: []
+            }
+            this.handleChange = this.handleChange.bind(this);
+            this.submitMessage = this.submitMessage.bind(this);
+        }
+        handleChange(event) {
+            this.setState({
+                input: event.target.value
+            });
+        }
+        submitMessage() {  
+            this.setState((state) => {
+                const currentMessage = state.input;
+                return {
+                    input: '',
+                    messages: state.messages.concat(currentMessage)
+                };
+            });
+        }
+        render() {
+            return (
+                <div>
+                    <h2>Type in a new Message:</h2>
+                    <input
+                    value={this.state.input}
+                    onChange={this.handleChange}/><br/>
+                    <button onClick={this.submitMessage}>Submit</button>
+                    <ul>
+                    {this.state.messages.map( (message, idx) => {
+                        return (
+                            <li key={idx}>{message}</li>
+                        )
+                        })
+                    }
+                    </ul>
+                </div>
+            );
+        }
+    };
+
+    const Provider = ReactRedux.Provider;
+
+    class AppWrapper extends React.Component {
+    // Renderiza el Provider debajo de esta línea
+        render() {
+            return (
+                <Provider store={store}>
+                    <DisplayMessages />
+                </Provider>
+            );
+        }
+    // Cambia el código encima de esta línea
+    };
+    ```
+
+5. Asigna el estado a props
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/map-state-to-props)    
+
+    **Ejercicio**
+    Crea una función `mapStateToProps()`. Esta función debe tomar `state` como argumento, y luego devolver un objeto que asigna ese estado a nombres de propiedades específicas. Estas propiedades serán accesibles a tu componente a través de `props`. Dado que este ejemplo mantiene todo el estado de la aplicación en un solo arreglo, puedes pasar todo ese estado a tu componente. Crea una propiedad `messages` en el objeto que se devuelve, y establécela como `state`.
+
+    ```js
+    const state = [];
+
+    // Cambia el código debajo de esta línea
+    const mapStateToProps = (state) => { 
+        return { 
+            messages: state
+        }
+    }
+    ```
+
+6. Asigna el envío a props
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/map-dispatch-to-props)    
+
+    **Ejercicio**
+    El editor de código proporciona un creador de acción llamado `addMessage()`. Escribe la función `mapDispatchToProps()` que toma `dispatch` como argumento y devuelve un objeto. El objeto debe tener una propiedad `submitNewMessage` establecida en la función de envío, que toma un parámetro para el nuevo mensaje a añadir cuando envía `addMessage()`.
+
+    ```js
+    const addMessage = (message) => {
+        return {
+            type: 'ADD',
+            message: message
+        }
+    };
+
+    // Cambia el código debajo de esta línea
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            submitNewMessage: (message) => {
+                dispatch(addMessage(message))
+            }
+        }
+    }
+    ```
+
+7. Conecta Redux a React
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/connect-redux-to-react)    
+
+    **Ejercicio**
+    El editor de código tiene las funciones `mapStateToProps()` y `mapDispatchToProps()` y un nuevo componente React llamado `Presentational`. Conecta este componente a Redux con el método `connect` del objeto global `ReactRedux`, y llámalo inmediatamente en el componente `Presentational`. Asigna el resultado a una nueva `const` llamada `ConnectedComponent` que representa el componente conectado. Eso es todo, ¡ahora estás conectado a Redux! Intenta cambiar cualquiera de los argumentos de `connect` a `null` y observa los resultados de la prueba.
+
+    ```js
+    const addMessage = (message) => {
+        return {
+            type: 'ADD',
+            message: message
+        }
+    };
+
+    const mapStateToProps = (state) => {
+        return {
+            messages: state
+        }
+    };
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            submitNewMessage: (message) => {
+                dispatch(addMessage(message));
+            }
+        }
+    };
+
+    class Presentational extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            return <h3>This is a Presentational Component</h3>
+        }
+    };
+
+    const connect = ReactRedux.connect;
+    // Cambia el código debajo de esta línea
+    const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps) (Presentational);
+    ```
+
+8. Conecta Redux a la aplicación de mensajes
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/connect-redux-to-the-messages-app)    
+
+    **Ejercicio**
+    El editor tiene todo el código que has escrito hasta ahora en esta sección. El único cambio es que el componente React se renombra a `Presentational`. Crea un nuevo componente en una constante llamada `Container` que usa `connect` para conectar el componente `Presentational` a Redux. Luego, en el `AppWrapper`, renderiza el componente `Provider` de React Redux. Pasa a `Provider` el `store` Redux como una prop y renderiza `Container` como un hijo. Una vez que todo esté configurado, verás que la aplicación de mensajes vuelve a aparecer en la página.
+
+    ```js
+    // Redux:
+    const ADD = 'ADD';
+
+    const addMessage = (message) => {
+        return {
+            type: ADD,
+            message: message
+        }
+    };
+
+    const messageReducer = (state = [], action) => {
+        switch (action.type) {
+            case ADD:
+            return [
+                ...state,
+                action.message
+            ];
+            default:
+            return state;
+        }
+    };
+
+    const store = Redux.createStore(messageReducer);
+
+    // React:
+    class Presentational extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                input: '',
+                messages: []
+            }
+            this.handleChange = this.handleChange.bind(this);
+            this.submitMessage = this.submitMessage.bind(this);
+        }
+        handleChange(event) {
+            this.setState({
+                input: event.target.value
+            });
+        }
+        submitMessage() {
+            this.setState((state) => {
+            const currentMessage = state.input;
+            return {
+                input: '',
+                messages: state.messages.concat(currentMessage)
+            };
+            });
+        }
+        render() {
+            return (
+            <div>
+                <h2>Type in a new Message:</h2>
+                <input
+                value={this.state.input}
+                onChange={this.handleChange}/><br/>
+                <button onClick={this.submitMessage}>Submit</button>
+                <ul>
+                {this.state.messages.map( (message, idx) => {
+                    return (
+                        <li key={idx}>{message}</li>
+                    )
+                    })
+                }
+                </ul>
+            </div>
+            );
+        }
+    };
+
+    // React-Redux:
+    const mapStateToProps = (state) => {
+        return { messages: state }
+    };
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            submitNewMessage: (newMessage) => {
+                dispatch(addMessage(newMessage))
+            }
+        }
+    };
+
+    const Provider = ReactRedux.Provider;
+    const connect = ReactRedux.connect;
+
+    // Define el componente Container aquí:
+    const Container = connect(mapStateToProps,mapDispatchToProps)(Presentational)
+
+    class AppWrapper extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            // Completa la sentencia return:
+            return (
+                <Provider store={store}>
+                    <Container />
+                </Provider>
+            );
+        }
+    };
+    ```
+
+9. Extrae el estado local en Redux
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/extract-local-state-into-redux)    
+
+    **Ejercicio**
+    En el componente `Presentational`, primero elimina la propiedad `messages` del local `state`. Estos mensajes serán gestionados por Redux. A continuación, modifica el método `submitMessage()` para que `submitNewMessage()` trabaje desde `this.props` y pase la entrada del mensaje actual desde el `state` local como un argumento. Ya que eliminaste `messages` desde el estado local, elimina también la propiedad `messages` de la llamada a `this.setState()`. Finalmente, modifica el método `render()` para que asigne los mensajes recibidos desde `props` en lugar de `state`.
+
+    Una vez realizados estos cambios, la aplicación seguirá funcionando igual, salvo que Redux gestiona el estado. Este ejemplo también ilustra cómo un componente puede tener un `state` local: tu componente aún registra la entrada del usuario localmente en su propio `state`. Puedes ver cómo Redux proporciona un framework útil de gestión de estados sobre React. Alcanzaste el mismo resultado usando solo el estado local de React al principio, y esto es generalmente posible con aplicaciones simples. Sin embargo, cuanto más complejas y grandes se vuelve tus aplicaciones, más lo hará la gestión del estado, y esto es el problema que Redux resuelve.
+
+    ```js
+    // Redux:
+    const ADD = 'ADD';
+
+    const addMessage = (message) => {
+        return {
+            type: ADD,
+            message: message
+        }
+    };
+
+    const messageReducer = (state = [], action) => {
+        switch (action.type) {
+            case ADD:
+            return [
+                ...state,
+                action.message
+            ];
+            default:
+            return state;
+        }
+    };
+
+    const store = Redux.createStore(messageReducer);
+
+    // React:
+    const Provider = ReactRedux.Provider;
+    const connect = ReactRedux.connect;
+
+    // Change code below this line
+    class Presentational extends React.Component {
+        constructor(props) {
+            super(props);
+            
+            // Remove property 'messages' from Presentational's local state
+            this.state = {
+                input: ''
+            }
+            this.handleChange = this.handleChange.bind(this);
+            this.submitMessage = this.submitMessage.bind(this);
+        }
+        handleChange(event) {
+            this.setState({
+                input: event.target.value
+            });
+        }
+        submitMessage() {
+        
+            // Call 'submitNewMessage', which has been mapped to Presentational's props, with a new message;
+            // meanwhile, remove the 'messages' property from the object returned by this.setState().
+            this.props.submitNewMessage(this.state.input);
+            this.setState({
+                input: ''
+            });
+        }
+        render() {
+            return (
+                <div>
+                    <h2>Type in a new Message:</h2>
+                    <input
+                    value={this.state.input}
+                    onChange={this.handleChange}/><br/>
+                    <button onClick={this.submitMessage}>Submit</button>
+                    <ul>
+                    {/* The messages state is mapped to Presentational's props; therefore, when rendering,
+                        you should access the messages state through props, instead of Presentational's
+                        local state. */}
+                    {this.props.messages.map( (message, idx) => {
+                        return (
+                            <li key={idx}>{message}</li>
+                        )
+                        })
+                    }
+                    </ul>
+                </div>
+            );
+        }
+    };
+    // Change code above this line
+
+    const mapStateToProps = (state) => {
+        return {messages: state}
+    };
+
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            submitNewMessage: (message) => {
+                dispatch(addMessage(message))
+            }
+        }
+    };
+
+    const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
+
+    class AppWrapper extends React.Component {
+        render() {
+            return (
+                <Provider store={store}>
+                    <Container/>
+                </Provider>
+            );
+        }
+    };
+    ```
+
+10. Avanzando desde aquí
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/react-and-redux/moving-forward-from-here)    
+
+    **Ejercicio**
+    Imprime el mensaje `'Now I know React and Redux!'` en la consola.
+
+    ```js
+    /*
+        import React from 'react'
+        import ReactDOM from 'react-dom'
+        import { Provider, connect } from 'react-redux'
+        import { createStore, combineReducers, applyMiddleware } from 'redux'
+        import thunk from 'redux-thunk'
+
+        import rootReducer from './redux/reducers'
+        import App from './components/App'
+
+        const store = createStore(
+            rootReducer,
+            applyMiddleware(thunk)
+        );
+
+        ReactDOM.render(
+            <Provider store={store}>
+                <App/>
+            </Provider>,
+            document.getElementById('root')
+        );
+    */
+
+    // Cambia solo el código debajo de esta línea
+    console.log('Now I know React and Redux!')
+    ```
+
 # Proyectos de librerías de desarrollo de la interfaz
+Es hora de poner a prueba tus habilidades con las librerías de desarrollo de la interfaz. Usa Bootstrap, jQuery, Sass, React, y Redux para construir 5 proyectos que probarán todo lo que has aprendido hasta este punto.
+
+Completa los 5 proyectos y obtendrás la certificación librerías de desarrollo de la interfaz.
+
+1. Construye una máquina de frases aleatorias
+2. Crea un previsualizador de Markdown
+3. Crea una batería electrónica
+4. Crea una calculadora con JavaScript
+5. Construye un reloj 25 + 5
