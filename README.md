@@ -5741,6 +5741,33 @@ Completa los 5 proyectos y obtendrás la certificación librerías de desarrollo
     **Nota**: Twitter no permite que se carguen enlaces en un iframe. Intenta usar el atributo `target="_blank"` o `target="_top"` en el elemento `#tweet-quote` si tu tweet no se carga. `target="_top"` reemplazará la pestaña actual, así que asegúrate de que tu trabajo esté guardado.
 
 2. Crea un previsualizador de Markdown
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/front-end-development-libraries-projects/build-a-markdown-previewer)    
+
+    **Ejercicio**
+
+    **Objetivo**: Construye una aplicación que sea funcionalmente similar a esta: https://markdown-previewer.freecodecamp.rocks/.
+
+    **Historia de usuario #1**: Debo ver un elemento `textarea` con el correspondiente `id="editor"`.
+
+    **Historia de usuario #2**: Debo ver un elemento con el correspondiente `id="preview"`.
+
+    **Historia de usuario #3**: Cuando introduzco texto dentro del elemento `#editor`, el elemento `#preview` se actualiza mientras escribo, para mostrar el contenido del textarea.
+
+    **Historia de usuario #4**: Cuando introduzco markdown tipo GitHub en el elemento `#editor`, el texto es renderizado como HTML en el elemento `#preview` mientras escribo (PISTA: No necesitas analizar markdown tú mismo: puedes importar la librería "Marked" https://cdnjs.com/libraries/marked).
+
+    **Historia de usuario #5**: Cuando la primera vez que mi previsualizador de lenguaje de marcado se carga, el texto por defecto en el campo `#editor` debe contener un lenguaje de marcado válido que represente al menos uno de los siguientes elementos: un encabezado (tamaño H1), un subencabezado (tamaño H2), un enlace, código en línea, un bloque de código, un elemento de lista, una cita en bloque, una imagen y texto en negrita.
+
+    **Historia de usuario #6**: Cuando mi previsualizador de markdown se carga, el markdown predeterminado en el campo `#editor` debe ser renderizado como HTML en el elemento `#preview`.
+
+    **Bonus opcional (No necesitas hacer esto para pasar esta prueba)**: Mi previsualizador de markdown interpreta los retornos de carro y las renderiza como elementos br (salto de línea).
+
+    Puedes crear tu proyecto usando esta plantilla, haciendo clic en `Save` para crear tu propio proyecto CodePen. https://codepen.io/pen?template=MJjpwO
+
+    Una vez que hayas terminado, envía la URL de tu proyecto funcional con todas las pruebas pasadas.
+
 3. Crea una batería electrónica
+
 4. Crea una calculadora con JavaScript
+
 5. Construye un reloj 25 + 5
