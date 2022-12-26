@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Vinculamos un archivo de hoja de estilos externo (styles.css) a nuestro documento HTML -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Esta línea de código carga una hoja de estilos desde un servidor externo para usar la fuente "Font Awesome", que contiene íconos y símbolos vectoriales. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+
+    <title>Máquina de Citas Aleatoria</title>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <!-- #1: Puedo ver un elemento contenedor con un archivo id="quote-box" -->
+      <div id="quote-box">
+        <div class="quote-text">
+          <!-- #2: Dentro de #quote-box, puedo ver un elemento con su correspondiente id="text" -->
+          <i class="fa fa-quote-left"> </i><span id="text"></span>
+        </div>
+        <!-- #3: Dentro de #quote-box, puedo ver un elemento con su correspondiente id="author". -->
+        <div class="quote-author">- <span id="author"></span></div>
+        <div class="buttons">
+          <!-- #5: Dentro de #quote-box, puedo ver un elemento clickeable a con su correspondiente id="tweet-quote" -->
+          <a class="button" id="tweet-quote" title="Tweet this quote!" target="_blank">
+            <i class="fa fa-twitter"></i>
+          </a>
+          <a class="button" id="tumblr-quote" title="Post this quote on tumblr!" target="_blank">
+            <i class="fa fa-tumblr"></i>
+          </a>
+          <!-- #4: Dentro de #quote-box, puedo ver un elemento en el que se puede hacer clic con su correspondiente id="new-quote" -->
+          <button class="button" id="new-quote">Nueva cita</button>
+        </div>
+      </div>
+      <div class="footer">por <a href="https://codepen.io/kurganpsp">kurganpsp</a></div>
+    </div>
+
+    <!-- esta linea es usada para incluir JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
+    <!-- JQuery UI es una biblioteca de componentes de interfaz de usuario de código abierto que se basa en la biblioteca JQuery. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <!-- para vincular un archivo de JavaScript externo a un documento HTML -->
+    <script src="script.js"></script>
+
+  </body>
+</html>
