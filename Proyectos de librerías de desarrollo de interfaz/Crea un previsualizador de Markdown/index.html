@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.js"></script>
+	<link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="app"></div>
+	<script src="script.js"></script>
+    <script type="text/babel">
+      const initialState = `
+# Bienvenido a mi vista previa de React Markdown!.
+## Este es un subtítulo...
+También hay [enlaces](https://www.freecodecamp.org)
+codigo en linea \`<div></div>\`
+\`\`\`
+// este es un código de varias líneas:
+function anotherExample(firstLine, lastLine) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+1. Y también hay listas numeradas.
+> ¡Citas en bloque!
+**bold**
+![freeCodeCamp Logo](https://cdn.freecodecamp.org/testable-projects-fcc/images/fcc_secondary.svg)
+      `;
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { markdown: initialState };
+          this.handleChange = this.handleChange.bind(this);
+          marked.setOptions({
+            breaks: true
+          })
+        }
+        handleChange(event) {
+          this.setState({ markdown: event.target.value });
+          
+        }
+        render() {
+          return (
+            <div>
+                <div className="row">
+                  <div className="editorWrap">
+					<div class="toolbar">Editor de Markdown</div>
+                    <textarea
+                      id="editor"
+                      className="form-control"
+                      value={this.state.markdown}
+                      onChange={this.handleChange}
+                      style={{ width: "100%", height: "50vh" }}
+                    />					
+                  </div>
+				  <div class="converter"></div>
+                  <div className="previewWrap">
+					<div class="toolbar">Previsualizador</div>
+                    <div id="preview"
+                      dangerouslySetInnerHTML={{
+                        __html: marked(this.state.markdown)
+                      }}
+                    />
+                  </div>
+              </div>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("app"));
+    </script>
+  </body>
+</html>
