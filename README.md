@@ -5696,6 +5696,7 @@ Ahora que sabes cómo administrar el flujo de datos compartidos con Redux, es ho
     ```
 
 # Proyectos de librerías de desarrollo de la interfaz
+
 Es hora de poner a prueba tus habilidades con las librerías de desarrollo de la interfaz. Usa Bootstrap, jQuery, Sass, React, y Redux para construir 5 proyectos que probarán todo lo que has aprendido hasta este punto.
 
 Completa los 5 proyectos y obtendrás la certificación librerías de desarrollo de la interfaz.
@@ -5810,9 +5811,121 @@ Completa los 5 proyectos y obtendrás la certificación librerías de desarrollo
 
     Una vez que hayas terminado, envía la URL a tu proyecto de trabajo con todas sus pruebas verificadas.
 
-    [Solucion](https://codepen.io/kurganpsp/pen/JjBGyVg)
+    [Solucion](https://codepen.io/kurganpsp/pen/OJwMejd)
 
 
 4. Crea una calculadora con JavaScript
 
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/front-end-development-libraries-projects/build-a-javascript-calculator)    
+
+    **Ejercicio**
+
+    **Objetivo**: Construye una aplicación que sea funcionalmente similar a esta: https://javascript-calculator.freecodecamp.rocks/.
+
+    **Historia de usuario #1**: Mi calculadora debe contener un elemento en el que se pueda hacer clic que contenga un `=` (signo igual) con un correspondiente `id="equals"`.
+
+    **Historia de usuario #2**: Mi calculadora debe contener 10 elementos que puedan hacer clic, que contengan un número cada uno de 0-9, con los siguientes ID correspondientes: `id="zero"`, `id="one"`, `id="two"`, `id="three"`, `id="four"`, `id="five"`, `id="six"`, `id="seven"`, `id="eight"`, y `id="nine"`.
+
+    **Historia de usuario #3**: Mi calculadora debe contener 4 elementos que se puedan hacer clic que contengan uno de los 4 operadores matemáticos primarios con los siguientes identificadores correspondientes: `id="add"` `id="subtract"`, `id="multiply"`, `id="divide"`.
+
+    **Historia de usuario #4**: Mi calculadora debe contener un elemento que se pueda hacer clic que contenga un `.` (punto decimal) símbolo con el correspondiente `id="decimal"`.
+
+    **Historia de usuario #5**: Mi calculadora debe contener un elemento que se pueda hacer clic con un `id="clear"`.
+
+    **Historia de usuario #6**: Mi calculadora debe contener un elemento para mostrar valores con un correspondiente `id="display"`.
+
+    **Historia de usuario #7**: En cualquier momento, pulsando el botón `clear` elimina los valores de entrada y salida. Luego devuelve la calculadora a su estado inicial; debe mostrar 0 en el elemento con el id `display`.
+
+    **Historia de usuario #8**: Al introducir números, debo ser capaz de ver mi entrada en el elemento con el id `display`.
+
+    **Historia de usuario #9**: En cualquier orden, debo poder añadir, restar, multiplicar y dividir una cadena de números de cualquier longitud. Además cuando presione `=`, el resultado correcto debe mostrarse en el elemento con el id de `display`.
+
+    **Historia de usuario #10**: Al introducir números, mi calculadora no debe permitir que un número comience con varios ceros.
+
+    **Historia de usuario #11**: Cuando se hace clic en el elemento decimal, un `.` debe añadirse al valor mostrado actualmente; dos `.` en un número no debe ser aceptado.
+
+    **Historia de usuario #12**: Debe ser capaz de realizar cualquier operación (`+`, `-`, `*`, `/`) en números que contienen puntos decimales.
+
+    **Historia de usuario #13**: Si se introducen 2 o más operadores consecutivamente, la operación realizada debe ser el último operador introducido (excluyendo el signo negativo (`-`). Por ejemplo, si `5 + * 7 =` es introducido, el resultado debe ser `35` (p.e. `5 * 7`); si `5 * - 5 =` es introducido, el resultado debe ser `-25` (p.e `5 * (-5)`).
+
+    **Historia de usuario #14**: Presionando un operador inmediatamente después de `=` debe comenzar un nuevo cálculo que opere sobre el resultado de la evaluación anterior.
+
+    **Historia de usuario #15**: Mi calculadora debe tener varios decimales de precisión a la hora de redondear (tenga en cuenta que no hay un estándar exacto, pero debe ser capaz de manejar cálculos como `2 / 7` con una precisión razonable de al menos 4 decimales.
+
+    **Nota sobre la lógica de la calculadora**: Debe tener en cuenta que hay dos escuelas principales de pensamiento sobre la lógica de entrada de las calculadoras: lógica de ejecución inmediata y lógica de la fórmula. Nuestro ejemplo utiliza lógica de la fórmula. Observa el orden de precedencia de la operación, la ejecución inmediata no lo hace. Ambas son aceptables, pero ten en cuenta que dependiendo de cuál elijas, tu calculadora puede producir resultados diferentes a los nuestros para ciertas ecuaciones (ver ejemplo a continuación). Mientras tus matemáticas puedan ser verificadas por otra calculadora de producción, por favor no consideres esto un error.
+
+    **EXAMPLE**: `3 + 5 x 6 - 2 / 4 =`
+
+    * Lógica de ejecución inmediata: `11.5`
+    * Fórmula/Expresión lógica: `32.5`
+
+    Puedes construir tu proyecto utilizando esta plantilla CodePen y haciendo clic en `Save` para crear tu propio bolígrafo. https://codepen.io/pen?template=MJjpwO
+
+    [Solucion](https://codepen.io/kurganpsp/pen/GRBNoNB)
+
 5. Construye un reloj 25 + 5
+
+    Leccion original [FCC](https://www.freecodecamp.org/espanol/learn/front-end-development-libraries/front-end-development-libraries-projects/build-a-25--5-clock)    
+
+    **Ejercicio**
+
+    **Historia de usuario #1**: Puedo ver un elemento con `id="break-label"` que contiene una cadena (por ejemplo: "Break Length").
+
+    **Historia de usuario #2**: Puedo ver un elemento con `id="session-label"` que contiene una cadena (p.ej "Session Length").
+
+    **Historia de usuario #3**: Puedo ver dos elementos cliqueables con los siguientes IDs: `id="break-decrement"` y `id="session-decrement"`.
+
+    **Historia de usuario #4**: Puedo ver dos elemento cliqueables con los siguientes IDs: `id="break-increment"` y `id="session-increment"`.
+
+    **Historia de usuario #5**: Puedo ver un elemento con el correspondiente `id="break-length"` que por defecto (al cargarse) muestra el valor 5.
+
+    **Historia de usuario #6**: Puedo ver un elemento con el correspondiente `id="session-length"`, que por defecto muestra el valor 25.
+
+    **Historia de usuario #7**: Puedo ver un elemento con el correspondiente `id="timer-label"`, que contiene una cadena indicando si la sesión esta inicializada (p.ej. "Session").
+
+    **Historia de usuario #8**: Puedo ver un elemento con el correspondiente `id="time-left"`. NOTA: En pausa o en ejecución, el valor en este campo debe mostrarse siempre en formato `mm:ss` (es decir: 25:00).
+
+    **Historia de usuario #9**: Puedo ver un elemento cliqueable con el correspondiente `id="start_stop"`.
+
+    **Historia de usuario #10**: Puedo ver un elemento cliqueable con el correspondiente `id="reset"`.
+
+    **Historia de usuario #11**: Cuando hago clic en el elemento con el id: `reset`, cualquier temporizador en ejecución debe detenerse. El valor en el `id="break-length"` debe regresar a `5`, el valor en el `id="session-length"` debe regresar a 25 y el elemento con `id="time-left"` debe reiniciarse a su estado predeterminado.
+
+    **Historia de usuario #12**: Cuando hago clic en el elemento con id: `break-decrement`, el valor en `id="break-length"` se reduce en 1, y puedo ver el valor actualizado.
+
+    **Historia de usuario #13**: Cuando hago clic en el elemento con id: `break-increment`, el valor en `id="break-length"` se incrementa en 1 y puedo ver el valor actualizado.
+
+    **Historia de usuario #14**: Cuando hago clic en el elemento con id: `session-decrement`, el valor en `id="session-length"` se reduce en 1 y puedo ver el valor actualizado.
+
+    **Historia de usuario #15**: Cuando hago clic en el elemento con id: `session-increment`, el valor en `id="session-length"` se incrementa en 1 y puedo ver el valor actualizado.
+
+    **Historia de usuario #16**: No debo ser capaz de establecer una duración de la sesión o pausa <= 0.
+
+    **Historia de usuario #17**: No debo poder establecer una duración de la sesión o pausa > 60.
+
+    **Historia de usuario #18**: Cuando hago clic por primera vez en el elemento con el correspondiente `id="start_stop"`, el temporizador debe comenzar a correr desde el valor mostrado actualmente en `id="session-length"`, incluso si el valor se incrementó o se redujo respecto al valor original 25.
+
+    **Historia de usuario #19**: Si el temporizador se está ejecutando, el elemento con el id: `time-left` debe mostrar el tiempo restante en formato `mm:ss` (reduciendo 1 y actualizando el valor mostrado cada 1000ms).
+
+    **Historia de usuario #20**: Si el temporizador se está ejecutando y hago clic en el elemento `id="start_stop"`, la cuenta atrás debe pausarse.
+
+    **Historia de usuario #21**: Si el temporizador está pausado y hago clic en el elemento `id="start_stop"`, la cuenta atrás debe reanudarse desde el punto en el que fue pausada.
+
+    **Historia de usuario #22**: Cuando la cuenta atrás de la sesión llega a cero (NOTA: el temporizador DEBE llegar a 00:00) y una nueva cuenta atrás comienza, el elemento cuyo id es `timer-label` debería mostrar una cadena en la que se indica que el descanso (break) ha comenzado.
+
+    **Historia de usuario #23**: Cuando la cuenta atrás de la sesión llega a cero (NOTA: el temporizador DEBE llegar a 00:00), una nueva cuenta atrás comienza para el periodo de descanso (break) y se inicia desde el valor mostrado actualmente por el elemento `id="break-length"`.
+
+    **Historia de usuario #24**: Cuando la cuenta atrás en el periodo de descanso (break) llega a cero (NOTA: el temporizador DEBE llegar a 00:00) y una nueva cuenta atrás debe comenzar, el elemento cuyo id es `timer-label` debe mostrar una cadena en la que se indica que la sesión ha comenzado.
+
+    **Historia de usuario #25**: Cuando la cuenta atrás en el periodo de descanso (break) llega a cero (NOTA: el temporizador DEBE llegar a 00:00), una nueva cuenta atrás debe comenzar para la sesión, la cual se inicia desde el valor mostrado actualmente por el elemento `id="session-length"`.
+
+    **Historia de usuario #26**: Cuando una cuenta atrás llega a cero (NOTA: el temporizador DEBE llegar a 00:00), debe reproducirse un sonido que indica que el tiempo se ha agotado. Se debe utilizar una etiqueta HTML5 `audio` y tener un `id="beep"`.
+
+    **Historia de usuario #27**: El elemento de audio `id="beep"` debe ser de 1 segundo o mayor.
+
+    **Historia de usuario #28**: El elemento de audio con id: `beep` dejará de reproducirse y se reiniciará al hacer clic en el elemento con id: `reset`.
+
+    Puedes construir tu proyecto usando esta plantilla CodePen y haciendo clic en `Save` para crear tu propio entorno.
+    https://codepen.io/pen?template=MJjpwO
+
+    [Solucion](https://codepen.io/kurganpsp/pen/zYLwKeG?editors=0110)
